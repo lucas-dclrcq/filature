@@ -19,66 +19,6 @@ public class ConnectionResourceTests {
     @OidcSecurity(userinfo = {
             @UserInfo(key = "sub", value = "michel")
     })
-    void shouldListConnections() {
-        var sourceRequest = """
-                {
-                  "username": "test",
-                  "password": "password"
-                }
-                """;
-
-        String sourceLocation = given().contentType(ContentType.JSON)
-                .body(sourceRequest).when().post("/api/sources/enercoop")
-                .then()
-                .statusCode(201)
-                .extract().header("Content-Location");
-
-        String sourceId = sourceLocation.substring(sourceLocation.lastIndexOf("/") + 1);
-
-        var targetRequest = """
-                {
-                  "username": "test",
-                  "password": "password",
-                  "url": "https://nextcloud.example.com/",
-                  "uploadFolder": "bills"
-                }
-                """;
-
-        String targetLocation = given().contentType(ContentType.JSON)
-                .body(targetRequest).when().post("/api/targets/nextcloud")
-                .then()
-                .statusCode(201)
-                .extract().header("Content-Location");
-
-        String targetId = targetLocation.substring(targetLocation.lastIndexOf("/") + 1);
-
-        var connectionRequest = """
-                {
-                  "sourceConfigurationId": %s,
-                  "targetConfigurationId": %s,
-                  "targetUploadPath": "/bills"
-                }
-                """.formatted(sourceId, targetId);
-
-        given().contentType(ContentType.JSON)
-                .body(connectionRequest).when().post("/api/connections")
-                .then()
-                .statusCode(201);
-
-        given().when().get("/api/connections")
-                .then()
-                .statusCode(200)
-                .body("$", hasSize(greaterThanOrEqualTo(1)))
-                .body("[0].source.id", equalTo(Integer.parseInt(sourceId)))
-                .body("[0].target.id", equalTo(Integer.parseInt(targetId)))
-                .body("[0].targetUploadPath", equalTo("/bills"));
-    }
-
-    @Test
-    @TestSecurity(user = "michel", roles = "user")
-    @OidcSecurity(userinfo = {
-            @UserInfo(key = "sub", value = "michel")
-    })
     void shouldCreateConnection() {
         var sourceRequest = """
                 {

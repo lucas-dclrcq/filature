@@ -28,7 +28,7 @@ public class Synchronizer {
     @Inject
     FilatureConfiguration configuration;
 
-    @Scheduled(every = "5m")
+    @Scheduled(every = "{filature.synchronize-every}")
     public void scheduledSynchronize() {
         Connection.findSynchronizedMoreThan(configuration.synchronizeOlderThanHours())
                 .ifPresentOrElse(this::synchronize, () -> Log.info("No connections to synchronize"));

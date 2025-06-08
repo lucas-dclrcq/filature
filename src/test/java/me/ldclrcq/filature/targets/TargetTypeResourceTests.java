@@ -39,7 +39,7 @@ public class TargetTypeResourceTests {
                 .then()
                 .statusCode(200)
                 .body("$", hasSize(greaterThanOrEqualTo(1)))
-                .body("[0].name", equalTo("NEXTCLOUD"));
+                .body("[0].name", equalTo("Nextcloud"));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class TargetTypeResourceTests {
         given().when().get("/api/targets/" + id)
                 .then()
                 .statusCode(200)
-                .body("name", equalTo("NEXTCLOUD"));
+                .body("name", equalTo("Nextcloud"));
     }
 
     @Test

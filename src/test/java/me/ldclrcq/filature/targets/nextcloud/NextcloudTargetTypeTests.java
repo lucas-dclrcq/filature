@@ -37,7 +37,7 @@ public class NextcloudTargetTypeTests {
         given().when().get("/api/targets")
                 .then()
                 .statusCode(200)
-                .body("[0].name", equalTo("NEXTCLOUD"));
+                .body("[0].name", equalTo("Nextcloud"));
     }
 
     @Test

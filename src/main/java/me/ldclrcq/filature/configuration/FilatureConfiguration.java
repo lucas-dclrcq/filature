@@ -9,4 +9,6 @@ public interface FilatureConfiguration {
     String tempDownloadPath();
     @WithDefault("24")
     int synchronizeOlderThanHours();
+    @WithDefault("5m")
+    String synchronizeEvery();
 }
