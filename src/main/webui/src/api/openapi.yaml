@@ -1,0 +1,479 @@
+---
+openapi: 3.1.0
+tags:
+- name: Connections
+  description: Manage connections
+- name: Sources
+  description: Manage synchronization sources
+- name: Synchronizations
+  description: Manage synchronizations
+- name: Targets
+  description: Manage synchronization targets
+paths:
+  /api/connections:
+    get:
+      tags:
+      - Connections
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ConnectionSummary"
+      summary: List Connections
+    post:
+      tags:
+      - Connections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConnectionCreationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Create Connection
+  /api/connections/synchronize:
+    post:
+      tags:
+      - Connections
+      responses:
+        "201":
+          description: Created
+      summary: Synchronize All For User
+  /api/connections/{connectionId}/synchronize:
+    post:
+      tags:
+      - Connections
+      parameters:
+      - name: connectionId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "201":
+          description: Created
+      summary: Synchronize Now
+  /api/connections/{id}:
+    get:
+      tags:
+      - Connections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConnectionSummary"
+      summary: Get Connection
+    delete:
+      tags:
+      - Connections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+      summary: Delete Connection
+  /api/sources:
+    get:
+      tags:
+      - Sources
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SourceSummary"
+      summary: List Sources
+  /api/sources/enercoop:
+    post:
+      tags:
+      - Sources
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnercoopSourceCreationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Create Enercoop Source
+  /api/sources/enercoop/{id}:
+    put:
+      tags:
+      - Sources
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnercoopSourceUpdateRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Update Enercoop Source
+    get:
+      tags:
+      - Sources
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnercoopSourceSummary"
+      summary: Get Enercoop Source
+    delete:
+      tags:
+      - Sources
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+      summary: Delete Source
+  /api/synchronizations:
+    get:
+      tags:
+      - Synchronizations
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SynchronizationSummary"
+      summary: List Synchronizations
+  /api/targets:
+    get:
+      tags:
+      - Targets
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TargetSummary"
+      summary: List Targets
+  /api/targets/nextcloud:
+    post:
+      tags:
+      - Targets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NextcloudTargetCreationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Create Nextcloud Target
+  /api/targets/nextcloud/{id}:
+    put:
+      tags:
+      - Targets
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NextcloudTargetUpdateRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Update Nextcloud Target
+    get:
+      tags:
+      - Targets
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NextcloudTargetSummary"
+      summary: Get Nextcloud Target
+    delete:
+      tags:
+      - Targets
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+      summary: Delete Nextcloud Target
+  /api/targets/{id}:
+    get:
+      tags:
+      - Targets
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TargetSummary"
+      summary: Get Target
+    delete:
+      tags:
+      - Targets
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+      summary: Delete Target
+components:
+  schemas:
+    ConnectionCreationRequest:
+      type: object
+      required:
+      - sourceConfigurationId
+      - targetConfigurationId
+      - targetUploadPath
+      properties:
+        sourceConfigurationId:
+          type: integer
+          format: int64
+        targetConfigurationId:
+          type: integer
+          format: int64
+        targetUploadPath:
+          type: string
+          pattern: \S
+    ConnectionSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: string
+        source:
+          $ref: "#/components/schemas/SourceSummary"
+        target:
+          $ref: "#/components/schemas/TargetSummary"
+        targetUploadPath:
+          type: string
+    EnercoopSourceCreationRequest:
+      type: object
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          pattern: \S
+        password:
+          type: string
+          pattern: \S
+    EnercoopSourceSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        username:
+          type: string
+    EnercoopSourceUpdateRequest:
+      type: object
+      required:
+      - username
+      - password
+      properties:
+        username:
+          type: string
+          pattern: \S
+        password:
+          type: string
+          pattern: \S
+    LocalDateTime:
+      type: string
+      format: date-time
+      examples:
+      - 2022-03-10T12:15:50
+    NextcloudTargetCreationRequest:
+      type: object
+      required:
+      - username
+      - password
+      - url
+      properties:
+        username:
+          type: string
+          pattern: \S
+        password:
+          type: string
+          pattern: \S
+        url:
+          type: string
+          pattern: \S
+    NextcloudTargetSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        username:
+          type: string
+        url:
+          type: string
+    NextcloudTargetUpdateRequest:
+      type: object
+      required:
+      - username
+      - password
+      - url
+      properties:
+        username:
+          type: string
+          pattern: \S
+        password:
+          type: string
+          pattern: \S
+        url:
+          type: string
+          pattern: \S
+    SourceSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    SynchronizationStatus:
+      type: string
+      enum:
+      - SUCCESS
+      - FAILURE
+    SynchronizationSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        connectionId:
+          type: integer
+          format: int64
+        status:
+          $ref: "#/components/schemas/SynchronizationStatus"
+        error:
+          type: string
+        startedAt:
+          $ref: "#/components/schemas/LocalDateTime"
+        endedAt:
+          $ref: "#/components/schemas/LocalDateTime"
+    TargetSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+  securitySchemes:
+    SecurityScheme:
+      type: openIdConnect
+      description: Authentication
+info:
+  title: filature API
+  version: 1.0-SNAPSHOT
+servers:
+- url: http://localhost:8080
+  description: Auto generated value
+- url: http://0.0.0.0:8080
+  description: Auto generated value
