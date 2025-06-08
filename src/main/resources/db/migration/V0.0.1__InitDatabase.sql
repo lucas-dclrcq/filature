@@ -23,5 +23,17 @@ create table connections
     source_id          bigint references sources (id),
     target_id          bigint references targets (id),
     targetUploadPath   text,
-    userId             text not null
+    userId             text not null,
+    status text,
+    lastDocumentDownloadedDate timestamp(6)
+);
+
+create table synchronizations
+(
+    id            BIGSERIAL PRIMARY KEY,
+    connection_id BIGINT references connections (id),
+    status        TEXT,
+    error         TEXT,
+    endedAt       timestamp(6),
+    startedAt     timestamp(6)
 );

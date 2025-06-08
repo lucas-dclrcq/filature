@@ -1,62 +1,27 @@
-# filature
+# Filature
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Configuration
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+Use environment variables to configure filature :
 
-## Running the application in dev mode
+| Environment Variable            | Description                        | Required | Example                                                          |
+|---------------------------------|------------------------------------|----------|------------------------------------------------------------------|
+| FILATURE_JWT_SECRET             | Secret used to encrypt auth tokens | true     | 750d0512ce0af8a780399d6bb8296081efe2f1a98a94aad90cf8f58ba2492513 |
+| FILATURE_POSTGRESQL_URL         | Postgresql connection string       | true     | postgresql://\<username>:\<password>@\<host>:\<port>/\<database> |
+| FILATURE_OIDC_CLIENT_SERVER_URL | OIDC Server URL                    | true     | https://sso.example.com                                          |
+| FILATURE_OIDC_CLIENT_ID         | OIDC Client Id                     | true     | filature                                                         |
+| FILATURE_OIDC_CLIENT_SECRET     | OIDC Client Secret                 | true     |                                                                  |
 
-You can run your application in dev mode that enables live coding using:
+## Development
 
-```shell script
-./mvnw quarkus:dev
-```
+### Requirements
+- Docker
+- Java 21
+- Maven
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+### Start the app in development mode
 
-## Packaging and running the application
+Quarkus uses Dev Services to start automatically the dependencies (Keycloak & Postgresql) using docker.
 
-The application can be packaged using:
-
-```shell script
-./mvnw package
-```
-
-It produces the `quarkus-run.jar` file in the `targetType/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `targetType/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar targetType/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar targetType/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./targetType/filature-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+To start the app locally, just do : `mvn quarkus:dev`
+Make your modifications, and the app will automatically rebuild with your changes.
