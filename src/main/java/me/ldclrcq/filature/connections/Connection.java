@@ -2,6 +2,7 @@ package me.ldclrcq.filature.connections;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+import me.ldclrcq.filature.notifiers.Notifier;
 import me.ldclrcq.filature.sources.Source;
 import me.ldclrcq.filature.synchronizations.Synchronization;
 import me.ldclrcq.filature.targets.Target;
@@ -26,6 +27,10 @@ public class Connection extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "target_id")
     public Target target;
+
+    @ManyToOne
+    @JoinColumn(name = "notifier_id")
+    public Notifier notifier;
 
     public String targetUploadPath;
 

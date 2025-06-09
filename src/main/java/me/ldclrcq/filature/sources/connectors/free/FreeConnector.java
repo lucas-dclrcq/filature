@@ -33,8 +33,8 @@ public class FreeConnector implements SourceConnector {
     }
 
     @Override
-    public boolean appliesTo(SourceType sourceType) {
-        return sourceType == SourceType.FREE;
+    public SourceType appliesTo() {
+        return SourceType.FREE;
     }
 
     @Override

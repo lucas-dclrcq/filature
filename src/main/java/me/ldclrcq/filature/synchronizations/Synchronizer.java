@@ -5,6 +5,7 @@ import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import me.ldclrcq.filature.configuration.FilatureConfiguration;
 import me.ldclrcq.filature.connections.Connection;
+import me.ldclrcq.filature.notifiers.NotifierConnectors;
 import me.ldclrcq.filature.sources.SourceConnector;
 import me.ldclrcq.filature.sources.SourceConnectors;
 import me.ldclrcq.filature.targets.TargetConnector;
@@ -17,11 +18,13 @@ public class Synchronizer {
     private final FilatureConfiguration configuration;
     private final SourceConnectors sourceConnectors;
     private final TargetConnectors targetConnectors;
+    private final NotifierConnectors notifierConnectors;
 
-    public Synchronizer(FilatureConfiguration configuration, SourceConnectors sourceConnectors, TargetConnectors targetConnectors) {
+    public Synchronizer(FilatureConfiguration configuration, SourceConnectors sourceConnectors, TargetConnectors targetConnectors, NotifierConnectors notifierConnectors) {
         this.configuration = configuration;
         this.sourceConnectors = sourceConnectors;
         this.targetConnectors = targetConnectors;
+        this.notifierConnectors = notifierConnectors;
     }
 
     @Scheduled(every = "{filature.synchronize-every}")
@@ -45,12 +48,12 @@ public class Synchronizer {
         var synchronization = new Synchronization(LocalDateTime.now(), connection);
 
         try {
-            SourceConnector sourceConnector = this.sourceConnectors.getForSource(connection.source.type);
+            SourceConnector sourceConnector = this.sourceConnectors.getForType(connection.source.type);
 
             var downloadedDocuments = sourceConnector.downloadDocuments(connection.source, connection.lastDocumentDownloadedDate);
 
             if (!downloadedDocuments.isEmpty()) {
-                TargetConnector targetConnector = this.targetConnectors.getForTarget(connection.target.type);
+                TargetConnector targetConnector = this.targetConnectors.getForType(connection.target.type);
                 targetConnector.uploadDocuments(connection.target, downloadedDocuments.downloadedPaths(), connection.targetUploadPath);
 
                 connection.source.configuration.put("lastDocumentDate", downloadedDocuments.lastDocumentDate().toString());
@@ -67,6 +70,13 @@ public class Synchronizer {
         finally {
             LocalDateTime now = LocalDateTime.now();
             synchronization.endedAt = now;
+
+            if (connection.notifier != null) {
+                this.notifierConnectors
+                        .getForType(connection.notifier.type)
+                        .notify(SynchronizationSummary.fromSynchronization(synchronization));
+            }
+
             connection.lastSynchronizedAt = now;
             synchronization.persist();
             connection.persist();

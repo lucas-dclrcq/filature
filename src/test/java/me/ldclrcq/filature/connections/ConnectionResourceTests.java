@@ -6,7 +6,13 @@ import io.quarkus.test.security.oidc.OidcSecurity;
 import io.quarkus.test.security.oidc.UserInfo;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import me.ldclrcq.filature.sources.Source;
+import me.ldclrcq.filature.synchronizations.Synchronization;
+import me.ldclrcq.filature.targets.Target;
 import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -14,6 +20,15 @@ import static org.hamcrest.Matchers.*;
 
 @QuarkusTest
 public class ConnectionResourceTests {
+    @BeforeEach
+    @Transactional
+    public void cleanup() {
+        Synchronization.deleteAll();
+        Connection.deleteAll();
+        Source.deleteAll();
+        Target.deleteAll();
+    }
+
     @Test
     @TestSecurity(user = "michel", roles = "user")
     @OidcSecurity(userinfo = {

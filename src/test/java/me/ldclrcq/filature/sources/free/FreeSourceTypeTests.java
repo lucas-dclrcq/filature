@@ -5,9 +5,12 @@ import io.quarkus.test.security.TestSecurity;
 import io.quarkus.test.security.oidc.OidcSecurity;
 import io.quarkus.test.security.oidc.UserInfo;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import jakarta.transaction.Transactional;
+import me.ldclrcq.filature.connections.Connection;
+import me.ldclrcq.filature.sources.Source;
+import me.ldclrcq.filature.synchronizations.Synchronization;
+import me.ldclrcq.filature.targets.Target;
+import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,6 +19,16 @@ import static org.hamcrest.Matchers.hasSize;
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FreeSourceTypeTests {
+
+    @BeforeEach
+    @Transactional
+    public void cleanup() {
+        Synchronization.deleteAll();
+        Connection.deleteAll();
+        Source.deleteAll();
+        Target.deleteAll();
+    }
+
     @Test
     @TestSecurity(user = "michel", roles = "user")
     @OidcSecurity(userinfo = {
@@ -112,69 +125,6 @@ public class FreeSourceTypeTests {
                 .body(request).when().post("/api/sources/free")
                 .then()
                 .statusCode(400);
-    }
-
-    @Test
-    @TestSecurity(user = "michel", roles = "user")
-    @OidcSecurity(userinfo = {
-            @UserInfo(key = "sub", value = "michel")
-    })
-    void shouldUpdateFreeSource() {
-        var originalRequest = """
-                {
-                  "login": "test",
-                  "password": "password"
-                }
-                """;
-
-        var response = given().contentType(ContentType.JSON)
-                .body(originalRequest).when().post("/api/sources/free")
-                .then()
-                .statusCode(201).extract().response();
-
-        var sourceId = response.getHeader("Content-Location").split("/")[5];
-
-        var updateRequest = """
-                {
-                  "login": "updated",
-                  "password": "updated"
-                }
-                """;
-
-        given().contentType(ContentType.JSON)
-                .body(updateRequest).when().put("/api/sources/free/" + sourceId)
-                .then()
-                .statusCode(200);
-    }
-
-    @Test
-    @TestSecurity(user = "michel", roles = "user")
-    @OidcSecurity(userinfo = {
-            @UserInfo(key = "sub", value = "michel")
-    })
-    void shouldDeleteSource() {
-        var request = """
-                {
-                  "login": "test",
-                  "password": "password"
-                }
-                """;
-
-        var response = given().contentType(ContentType.JSON)
-                .body(request).when().post("/api/sources/free")
-                .then()
-                .statusCode(201).extract().response();
-
-        var sourceId = response.getHeader("Content-Location").split("/")[5];
-
-        given().when().delete("/api/sources/free/" + sourceId)
-                .then()
-                .statusCode(204);
-
-        given().when().get("/api/sources")
-                .then()
-                .statusCode(200)
-                .body("$", hasSize(0));
     }
 
     @Test

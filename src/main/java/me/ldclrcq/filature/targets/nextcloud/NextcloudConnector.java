@@ -20,9 +20,10 @@ import java.util.List;
 
 @ApplicationScoped
 public class NextcloudConnector implements TargetConnector {
+
     @Override
-    public boolean appliesTo(TargetType targetType) {
-        return targetType == TargetType.NEXTCLOUD;
+    public TargetType appliesTo() {
+        return TargetType.NEXTCLOUD;
     }
 
     @Override

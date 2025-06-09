@@ -5,9 +5,12 @@ import io.quarkus.test.security.TestSecurity;
 import io.quarkus.test.security.oidc.OidcSecurity;
 import io.quarkus.test.security.oidc.UserInfo;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import jakarta.transaction.Transactional;
+import me.ldclrcq.filature.connections.Connection;
+import me.ldclrcq.filature.sources.Source;
+import me.ldclrcq.filature.synchronizations.Synchronization;
+import me.ldclrcq.filature.targets.Target;
+import org.junit.jupiter.api.*;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,6 +19,15 @@ import static org.hamcrest.Matchers.hasSize;
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EnercoopSourceTypeTests {
+    @BeforeEach
+    @Transactional
+    public void cleanup() {
+        Synchronization.deleteAll();
+        Connection.deleteAll();
+        Source.deleteAll();
+        Target.deleteAll();
+    }
+
     @Test
     @TestSecurity(user = "michel", roles = "user")
     @OidcSecurity(userinfo = {

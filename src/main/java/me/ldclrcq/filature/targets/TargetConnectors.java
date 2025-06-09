@@ -15,7 +15,7 @@ public class TargetConnectors {
         connectors.forEach(connector -> connectorsByType.put(connector.appliesTo(), connector));
     }
 
-    public TargetConnector getForTarget(TargetType sourceType) {
+    public TargetConnector getForType(TargetType sourceType) {
         return connectorsByType.get(sourceType);
     }
 }

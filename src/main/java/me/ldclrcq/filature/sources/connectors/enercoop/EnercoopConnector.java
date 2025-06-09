@@ -40,8 +40,8 @@ public class EnercoopConnector implements SourceConnector {
     }
 
     @Override
-    public boolean appliesTo(SourceType sourceType) {
-        return sourceType == SourceType.ENERCOOP;
+    public SourceType appliesTo() {
+        return SourceType.ENERCOOP;
     }
 
     @Override

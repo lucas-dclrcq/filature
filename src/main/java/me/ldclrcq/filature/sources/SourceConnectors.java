@@ -15,7 +15,7 @@ public class SourceConnectors {
         connectors.forEach(sourceConnector -> connectorsByType.put(sourceConnector.appliesTo(), sourceConnector));
     }
 
-    public SourceConnector getForSource(SourceType sourceType) {
+    public SourceConnector getForType(SourceType sourceType) {
         return connectorsByType.get(sourceType);
     }
 }

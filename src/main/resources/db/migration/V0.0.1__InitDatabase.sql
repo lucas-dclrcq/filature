@@ -16,12 +16,22 @@ create table targets
     credentials   jsonb
 );
 
+create table notifiers
+(
+    id            BIGSERIAL PRIMARY KEY,
+    type          text not null,
+    userId        text not null,
+    configuration jsonb,
+    credentials   jsonb
+);
+
 create table connections
 (
     id                 BIGSERIAL PRIMARY KEY,
     lastSynchronizedAt timestamp(6),
     source_id          bigint references sources (id),
     target_id          bigint references targets (id),
+    notifier_id        bigint references notifiers (id),
     targetUploadPath   text,
     userId             text not null,
     status text,
