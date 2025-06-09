@@ -1,16 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const userMenuRef = ref();
-const showUserMenu = (event: Event) => {
-  userMenuRef.value.toggle(event);
-};
-
-const logout = () => {
-  window.location.href = '/logout';
-};
-</script>
-
 <template>
   <div class="app-container">
     <header class="app-header">
@@ -81,6 +68,19 @@ const logout = () => {
     </footer>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const userMenuRef = ref();
+const showUserMenu = (event: Event) => {
+  userMenuRef.value.toggle(event);
+};
+
+const logout = () => {
+  window.location.href = '/logout';
+};
+</script>
 
 <style>
 .app-container {

@@ -2,11 +2,11 @@
   <div class="p-4">
     <Toast />
     <div class="card">
-      <div class="flex align-items-center justify-content-between mb-4">
-        <h1 class="text-3xl font-bold">Create Connection</h1>
+      <div class="flex align-items-center mb-4">
         <router-link to="/">
-          <Button label="Back to Home" icon="pi pi-home" class="p-button-secondary" />
+          <Button icon="pi pi-arrow-left" class="p-button-text" />
         </router-link>
+        <h1 class="text-3xl font-bold">Create Connection</h1>
       </div>
 
       <Card>
