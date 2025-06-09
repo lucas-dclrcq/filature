@@ -1,5 +1,14 @@
 <script setup lang="ts">
-// No additional imports needed
+import { ref } from 'vue';
+
+const userMenuRef = ref();
+const showUserMenu = (event: Event) => {
+  userMenuRef.value.toggle(event);
+};
+
+const logout = () => {
+  window.location.href = '/logout';
+};
 </script>
 
 <template>
@@ -11,7 +20,8 @@
             <h1 class="text-2xl font-bold text-white m-0">Filature</h1>
           </router-link>
           <div class="flex align-items-center">
-            <Button icon="pi pi-user" class="p-button-rounded p-button-text p-button-plain text-white" aria-label="Profile" />
+            <Button icon="pi pi-user" class="p-button-rounded p-button-text p-button-plain text-white" aria-label="Profile" @click="showUserMenu" />
+            <Menu ref="userMenuRef" :model="[{label: 'Logout', icon: 'pi pi-sign-out', command: logout}]" :popup="true" />
           </div>
         </div>
       </div>

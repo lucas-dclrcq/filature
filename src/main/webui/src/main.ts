@@ -9,6 +9,7 @@ import ToastService from 'primevue/toastservice'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Dialog from 'primevue/dialog'
+import Menu from 'primevue/menu'
 
 import 'primevue/resources/themes/lara-light-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
@@ -68,5 +69,6 @@ app.component('Toast', Toast)
 app.component('DataTable', DataTable)
 app.component('Column', Column)
 app.component('Dialog', Dialog)
+app.component('Menu', Menu)
 
 app.mount('#app')
