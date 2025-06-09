@@ -3,10 +3,10 @@
     <Toast />
     <div class="card">
       <div class="flex align-items-center justify-content-between mb-4">
-        <h1 class="text-3xl font-bold">Sources</h1>
+        <h1 class="text-3xl font-bold">Targets</h1>
         <div class="flex gap-2">
-          <router-link to="/sources/create">
-            <Button label="Create Source" icon="pi pi-plus" />
+          <router-link to="/targets/create">
+            <Button label="Create Target" icon="pi pi-plus" />
           </router-link>
         </div>
       </div>
@@ -15,17 +15,17 @@
         <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
       </div>
 
-      <div v-else-if="sources.length === 0" class="p-4 text-center">
-        <p class="text-xl mb-4">No sources found.</p>
+      <div v-else-if="targets.length === 0" class="p-4 text-center">
+        <p class="text-xl mb-4">No targets found.</p>
       </div>
 
-      <DataTable v-else :value="sources" stripedRows class="p-datatable-sm">
+      <DataTable v-else :value="targets" stripedRows class="p-datatable-sm">
         <Column field="id" header="ID"></Column>
         <Column header="Type">
           <template #body>
             <div class="flex align-items-center">
-              <img src="/icons/enercoop.png" alt="Enercoop" style="width: 24px; height: 24px;" />
-              <span class="ml-2">Enercoop</span>
+              <img src="/icons/nextcloud.png" alt="Nextcloud" style="width: 24px; height: 24px;" />
+              <span class="ml-2">Nextcloud</span>
             </div>
           </template>
         </Column>
@@ -35,7 +35,7 @@
             <Button 
               icon="pi pi-pencil" 
               class="p-button-rounded p-button-warning mr-2" 
-              @click="editSource(slotProps.data)" 
+              @click="editTarget(slotProps.data)" 
               tooltip="Edit"
             />
             <Button 
@@ -56,8 +56,8 @@
       >
         <div class="confirmation-content">
           <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-          <span v-if="sourceToDelete">
-            Are you sure you want to delete the source <b>{{ sourceToDelete.name || 'Unknown' }}</b>?
+          <span v-if="targetToDelete">
+            Are you sure you want to delete the target <b>{{ targetToDelete.name || 'Unknown' }}</b>?
           </span>
         </div>
         <template #footer>
@@ -71,7 +71,7 @@
             label="Yes" 
             icon="pi pi-check" 
             class="p-button-danger" 
-            @click="deleteSource" 
+            @click="deleteTarget" 
             :loading="deleteLoading"
           />
         </template>
@@ -83,36 +83,36 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
-import type { SourceSummary } from '../api/model';
-import { getFilatureAPI } from "../api/service/catalog.ts";
+
 import {useRouter} from "vue-router";
+import {getFilatureAPI} from "../../api/service/catalog.ts";
+import type {TargetSummary} from "../../api/model";
 
 const router = useRouter();
-
 const toast = useToast();
 const api = getFilatureAPI();
 
-const sources = ref<SourceSummary[]>([]);
+const targets = ref<TargetSummary[]>([]);
 const loading = ref(true);
 const deleteDialog = ref(false);
-const sourceToDelete = ref<SourceSummary | null>(null);
+const targetToDelete = ref<TargetSummary | null>(null);
 const deleteLoading = ref(false);
 
 onMounted(async () => {
-  await loadSources();
+  await loadTargets();
 });
 
-const loadSources = async () => {
+const loadTargets = async () => {
   loading.value = true;
   try {
-    const response = await api.getApiSources();
-    sources.value = response.data || [];
+    const response = await api.getApiTargets();
+    targets.value = response.data || [];
   } catch (error) {
-    console.error('Error loading sources:', error);
+    console.error('Error loading targets:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Failed to load sources. Please try again.',
+      detail: 'Failed to load targets. Please try again.',
       life: 3000
     });
   } finally {
@@ -120,34 +120,34 @@ const loadSources = async () => {
   }
 };
 
-const confirmDelete = (source: SourceSummary) => {
-  sourceToDelete.value = source;
+const confirmDelete = (target: TargetSummary) => {
+  targetToDelete.value = target;
   deleteDialog.value = true;
 };
 
-const deleteSource = async () => {
-  if (!sourceToDelete.value?.id) return;
+const deleteTarget = async () => {
+  if (!targetToDelete.value?.id) return;
 
   deleteLoading.value = true;
 
   try {
-    await api.deleteApiSourcesEnercoopId(sourceToDelete.value.id);
+    await api.deleteApiTargetsNextcloudId(targetToDelete.value.id);
 
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Source deleted successfully',
+      detail: 'Target deleted successfully',
       life: 3000
     });
 
     deleteDialog.value = false;
-    await loadSources();
+    await loadTargets();
   } catch (error) {
-    console.error('Error deleting source:', error);
+    console.error('Error deleting target:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Failed to delete source. Please try again.',
+      detail: 'Failed to delete target. Please try again.',
       life: 3000
     });
   } finally {
@@ -155,9 +155,9 @@ const deleteSource = async () => {
   }
 };
 
-const editSource = (source: SourceSummary) => {
-  console.log('Edit source:', source);
-  router.push(`/sources/enercoop/edit/${source.id}`);
+const editTarget = (target: TargetSummary) => {
+  console.log('Edit target:', target);
+  router.push(`/targets/nextcloud/edit/${target.id}`);
 };
 </script>
 

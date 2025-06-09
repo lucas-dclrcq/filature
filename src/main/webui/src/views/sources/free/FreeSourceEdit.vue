@@ -1,9 +1,9 @@
-<template>
+  <template>
   <div class="p-4">
     <Toast />
     <div class="card">
       <div class="flex align-items-center justify-content-between mb-4">
-        <h1 class="text-3xl font-bold">Edit Enercoop Source</h1>
+        <h1 class="text-3xl font-bold">Edit Free Source</h1>
         <router-link to="/sources">
           <Button label="Back to Sources" icon="pi pi-arrow-left" class="p-button-secondary" />
         </router-link>
@@ -17,15 +17,15 @@
         <template #content>
           <form @submit.prevent="updateSource" class="p-fluid">
             <div class="field mb-4">
-              <label for="username" class="font-bold">Username</label>
+              <label for="login" class="font-bold">Login</label>
               <InputText 
-                id="username" 
-                v-model="source.username" 
-                placeholder="Enter Enercoop username" 
-                :class="{'p-invalid': submitted && !source.username}"
+                id="login" 
+                v-model="source.login" 
+                placeholder="Enter Free login" 
+                :class="{'p-invalid': submitted && !source.login}"
                 required
               />
-              <small v-if="submitted && !source.username" class="p-error">Username is required.</small>
+              <small v-if="submitted && !source.login" class="p-error">Login is required.</small>
             </div>
             
             <div class="field mb-4">
@@ -34,7 +34,7 @@
                 id="password" 
                 type="password" 
                 v-model="source.password" 
-                placeholder="Enter Enercoop password" 
+                placeholder="Enter Free password" 
                 :class="{'p-invalid': submitted && !source.password}"
                 required
               />
@@ -60,7 +60,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
-import { getFilatureAPI } from "../api/service/catalog.ts";
+import {getFilatureAPI} from "../../../api/service/catalog.ts";
 
 const router = useRouter();
 const route = useRoute();
@@ -69,7 +69,7 @@ const api = getFilatureAPI();
 
 const sourceId = ref<number>(parseInt(route.params.id as string));
 const source = ref({
-  username: '',
+  login: '',
   password: ''
 });
 
@@ -90,9 +90,9 @@ onMounted(async () => {
   }
   
   try {
-    const response = await api.getApiSourcesEnercoopId(sourceId.value);
+    const response = await api.getApiSourcesFreeId(sourceId.value);
     if (response.data) {
-      source.value.username = response.data.username || '';
+      source.value.login = response.data.login || '';
       source.value.password = "********";
     }
   } catch (error) {
@@ -112,7 +112,7 @@ onMounted(async () => {
 const updateSource = async () => {
   submitted.value = true;
   
-  if (!source.value.username || !source.value.password) {
+  if (!source.value.login || !source.value.password) {
     toast.add({
       severity: 'error',
       summary: 'Validation Error',
@@ -125,25 +125,25 @@ const updateSource = async () => {
   submitting.value = true;
   
   try {
-    await api.putApiSourcesEnercoopId(sourceId.value, {
-      username: source.value.username,
+    await api.putApiSourcesFreeId(sourceId.value, {
+      login: source.value.login,
       password: source.value.password
     });
     
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Enercoop source updated successfully',
+      detail: 'Free source updated successfully',
       life: 3000
     });
     
     await router.push('/sources');
   } catch (error) {
-    console.error('Error updating Enercoop source:', error);
+    console.error('Error updating Free source:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Failed to update Enercoop source. Please try again.',
+      detail: 'Failed to update Free source. Please try again.',
       life: 3000
     });
   } finally {

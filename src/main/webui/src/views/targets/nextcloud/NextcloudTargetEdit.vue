@@ -72,7 +72,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
-import { getFilatureAPI } from "../api/service/catalog.ts";
+import {getFilatureAPI} from "../../../api/service/catalog.ts";
 
 const router = useRouter();
 const route = useRoute();
@@ -103,10 +103,7 @@ onMounted(async () => {
   }
   
   try {
-    // Load target details
     const response = await api.getApiTargetsNextcloudId(targetId.value);
-    // Since the API doesn't return the password, we only set the url and username
-    // The user will need to enter the password again
     if (response.data) {
       target.value.url = response.data.url || '';
       target.value.username = response.data.username || '';
@@ -128,7 +125,6 @@ onMounted(async () => {
 const updateTarget = async () => {
   submitted.value = true;
 
-  // Validate all fields are filled
   if (!target.value.url || !target.value.username || !target.value.password) {
     toast.add({
       severity: 'error',

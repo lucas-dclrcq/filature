@@ -254,6 +254,106 @@
         "summary" : "Delete Source"
       }
     },
+    "/api/sources/free" : {
+      "post" : {
+        "tags" : [ "Sources" ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FreeSourceCreationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "summary" : "Create Free Source"
+      }
+    },
+    "/api/sources/free/{id}" : {
+      "put" : {
+        "tags" : [ "Sources" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FreeSourceUpdateRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "summary" : "Update Free Source"
+      },
+      "get" : {
+        "tags" : [ "Sources" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FreeSourceSummary"
+                }
+              }
+            }
+          }
+        },
+        "summary" : "Get Free Source"
+      },
+      "delete" : {
+        "tags" : [ "Sources" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "summary" : "Delete Source"
+      }
+    },
     "/api/synchronizations" : {
       "get" : {
         "tags" : [ "Synchronizations" ],
@@ -517,6 +617,49 @@
         "required" : [ "username", "password" ],
         "properties" : {
           "username" : {
+            "type" : "string",
+            "pattern" : "\\S"
+          },
+          "password" : {
+            "type" : "string",
+            "pattern" : "\\S"
+          }
+        }
+      },
+      "FreeSourceCreationRequest" : {
+        "type" : "object",
+        "required" : [ "login", "password" ],
+        "properties" : {
+          "login" : {
+            "type" : "string",
+            "pattern" : "\\S"
+          },
+          "password" : {
+            "type" : "string",
+            "pattern" : "\\S"
+          }
+        }
+      },
+      "FreeSourceSummary" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "login" : {
+            "type" : "string"
+          }
+        }
+      },
+      "FreeSourceUpdateRequest" : {
+        "type" : "object",
+        "required" : [ "login", "password" ],
+        "properties" : {
+          "login" : {
             "type" : "string",
             "pattern" : "\\S"
           },

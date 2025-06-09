@@ -3,10 +3,10 @@
     <Toast />
     <div class="card">
       <div class="flex align-items-center justify-content-between mb-4">
-        <h1 class="text-3xl font-bold">Targets</h1>
+        <h1 class="text-3xl font-bold">Sources</h1>
         <div class="flex gap-2">
-          <router-link to="/targets/create">
-            <Button label="Create Target" icon="pi pi-plus" />
+          <router-link to="/sources/create">
+            <Button label="Create Source" icon="pi pi-plus" />
           </router-link>
         </div>
       </div>
@@ -15,17 +15,21 @@
         <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
       </div>
 
-      <div v-else-if="targets.length === 0" class="p-4 text-center">
-        <p class="text-xl mb-4">No targets found.</p>
+      <div v-else-if="sources.length === 0" class="p-4 text-center">
+        <p class="text-xl mb-4">No sources found.</p>
       </div>
 
-      <DataTable v-else :value="targets" stripedRows class="p-datatable-sm">
+      <DataTable v-else :value="sources" stripedRows class="p-datatable-sm">
         <Column field="id" header="ID"></Column>
         <Column header="Type">
-          <template #body>
+          <template #body="slotProps">
             <div class="flex align-items-center">
-              <img src="/icons/nextcloud.png" alt="Nextcloud" style="width: 24px; height: 24px;" />
-              <span class="ml-2">Nextcloud</span>
+              <img 
+                :src="slotProps.data.name === 'Enercoop' ? '/icons/enercoop.png' : '/icons/free.png'" 
+                :alt="slotProps.data.name" 
+                style="width: 24px; height: 24px;" 
+              />
+              <span class="ml-2">{{ slotProps.data.name }}</span>
             </div>
           </template>
         </Column>
@@ -35,7 +39,7 @@
             <Button 
               icon="pi pi-pencil" 
               class="p-button-rounded p-button-warning mr-2" 
-              @click="editTarget(slotProps.data)" 
+              @click="editSource(slotProps.data)" 
               tooltip="Edit"
             />
             <Button 
@@ -56,8 +60,8 @@
       >
         <div class="confirmation-content">
           <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-          <span v-if="targetToDelete">
-            Are you sure you want to delete the target <b>{{ targetToDelete.name || 'Unknown' }}</b>?
+          <span v-if="sourceToDelete">
+            Are you sure you want to delete the source <b>{{ sourceToDelete.name || 'Unknown' }}</b>?
           </span>
         </div>
         <template #footer>
@@ -71,7 +75,7 @@
             label="Yes" 
             icon="pi pi-check" 
             class="p-button-danger" 
-            @click="deleteTarget" 
+            @click="deleteSource" 
             :loading="deleteLoading"
           />
         </template>
@@ -83,35 +87,36 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
-import type { TargetSummary } from '../api/model';
-import { getFilatureAPI } from "../api/service/catalog.ts";
 import {useRouter} from "vue-router";
+import type {SourceSummary} from "../../api/model";
+import {getFilatureAPI} from "../../api/service/catalog.ts";
 
 const router = useRouter();
+
 const toast = useToast();
 const api = getFilatureAPI();
 
-const targets = ref<TargetSummary[]>([]);
+const sources = ref<SourceSummary[]>([]);
 const loading = ref(true);
 const deleteDialog = ref(false);
-const targetToDelete = ref<TargetSummary | null>(null);
+const sourceToDelete = ref<SourceSummary | null>(null);
 const deleteLoading = ref(false);
 
 onMounted(async () => {
-  await loadTargets();
+  await loadSources();
 });
 
-const loadTargets = async () => {
+const loadSources = async () => {
   loading.value = true;
   try {
-    const response = await api.getApiTargets();
-    targets.value = response.data || [];
+    const response = await api.getApiSources();
+    sources.value = response.data || [];
   } catch (error) {
-    console.error('Error loading targets:', error);
+    console.error('Error loading sources:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Failed to load targets. Please try again.',
+      detail: 'Failed to load sources. Please try again.',
       life: 3000
     });
   } finally {
@@ -119,35 +124,38 @@ const loadTargets = async () => {
   }
 };
 
-const confirmDelete = (target: TargetSummary) => {
-  targetToDelete.value = target;
+const confirmDelete = (source: SourceSummary) => {
+  sourceToDelete.value = source;
   deleteDialog.value = true;
 };
 
-const deleteTarget = async () => {
-  if (!targetToDelete.value?.id) return;
+const deleteSource = async () => {
+  if (!sourceToDelete.value?.id) return;
 
   deleteLoading.value = true;
 
   try {
-    // Assuming there's a delete endpoint for targets
-    await api.deleteApiTargetsNextcloudId(targetToDelete.value.id);
+    if (sourceToDelete.value.name === 'Enercoop') {
+      await api.deleteApiSourcesEnercoopId(sourceToDelete.value.id);
+    } else {
+      await api.deleteApiSourcesFreeId(sourceToDelete.value.id);
+    }
 
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Target deleted successfully',
+      detail: 'Source deleted successfully',
       life: 3000
     });
 
     deleteDialog.value = false;
-    await loadTargets();
+    await loadSources();
   } catch (error) {
-    console.error('Error deleting target:', error);
+    console.error('Error deleting source:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Failed to delete target. Please try again.',
+      detail: 'Failed to delete source. Please try again.',
       life: 3000
     });
   } finally {
@@ -155,9 +163,10 @@ const deleteTarget = async () => {
   }
 };
 
-const editTarget = (target: TargetSummary) => {
-  console.log('Edit target:', target);
-  router.push(`/targets/nextcloud/edit/${target.id}`);
+const editSource = (source: SourceSummary) => {
+  console.log('Edit source:', source);
+  const sourceType = source.name === 'Enercoop' ? 'enercoop' : 'free';
+  router.push(`/sources/${sourceType}/edit/${source.id}`);
 };
 </script>
 

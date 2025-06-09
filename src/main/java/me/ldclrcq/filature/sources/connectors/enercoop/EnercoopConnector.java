@@ -1,4 +1,4 @@
-package me.ldclrcq.filature.sources.enercoop;
+package me.ldclrcq.filature.sources.connectors.enercoop;
 
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;

@@ -1,29 +1,29 @@
-package me.ldclrcq.filature.sources.enercoop;
+package me.ldclrcq.filature.sources.connectors.free;
 
 import java.time.LocalDate;
 import java.util.Map;
 
-public class EnercoopBill {
+public class FreeBill {
     private double amount;
-    private String currency;
     private LocalDate date;
     private String vendor;
     private String vendorRef;
     private String filename;
     private String fileurl;
+    private String contractReference;
     private Map<String, Object> fileAttributes;
 
-    public EnercoopBill() {
+    public FreeBill() {
     }
 
-    public EnercoopBill(double amount, String currency, LocalDate date, String vendor, String vendorRef, String filename, String fileurl, Map<String, Object> fileAttributes) {
+    public FreeBill(double amount, LocalDate date, String vendor, String vendorRef, String filename, String fileurl, String contractReference, Map<String, Object> fileAttributes) {
         this.amount = amount;
-        this.currency = currency;
         this.date = date;
         this.vendor = vendor;
         this.vendorRef = vendorRef;
         this.filename = filename;
         this.fileurl = fileurl;
+        this.contractReference = contractReference;
         this.fileAttributes = fileAttributes;
     }
 
@@ -33,14 +33,6 @@ public class EnercoopBill {
 
     public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public LocalDate getDate() {
@@ -81,6 +73,14 @@ public class EnercoopBill {
 
     public void setFileurl(String fileurl) {
         this.fileurl = fileurl;
+    }
+
+    public String getContractReference() {
+        return contractReference;
+    }
+
+    public void setContractReference(String contractReference) {
+        this.contractReference = contractReference;
     }
 
     public Map<String, Object> getFileAttributes() {

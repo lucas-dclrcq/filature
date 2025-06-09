@@ -17,9 +17,6 @@
 
       <div v-else-if="connections.length === 0" class="p-4 text-center">
         <p class="text-xl mb-4">No connections found.</p>
-        <router-link to="/connections/create">
-          <Button label="Create Connection" icon="pi pi-plus" />
-        </router-link>
       </div>
 
       <DataTable v-else :value="connections" stripedRows class="p-datatable-sm">
@@ -98,9 +95,9 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive } from 'vue';
 import { useToast } from 'primevue/usetoast';
-import type { ConnectionSummary } from '../api/model';
-import {getFilatureAPI} from "../api/service/catalog.ts";
 import {useRouter} from "vue-router";
+import type {ConnectionSummary} from "../../api/model";
+import {getFilatureAPI} from "../../api/service/catalog.ts";
 
 const router = useRouter();
 const toast = useToast();

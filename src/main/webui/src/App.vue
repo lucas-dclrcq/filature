@@ -28,6 +28,12 @@
               </router-link>
             </li>
             <li>
+              <router-link to="/synchronizations" class="sidebar-link">
+                <i class="pi pi-sync mr-2"></i>
+                Synchronizations
+              </router-link>
+            </li>
+            <li>
               <router-link to="/sources" class="sidebar-link">
                 <i class="pi pi-database mr-2"></i>
                 Sources
@@ -40,9 +46,9 @@
               </router-link>
             </li>
             <li>
-              <router-link to="/synchronizations" class="sidebar-link">
-                <i class="pi pi-sync mr-2"></i>
-                Synchronizations
+              <router-link to="/notifiers" class="sidebar-link">
+                <i class="pi pi-bell mr-2"></i>
+                Notifiers
               </router-link>
             </li>
           </ul>

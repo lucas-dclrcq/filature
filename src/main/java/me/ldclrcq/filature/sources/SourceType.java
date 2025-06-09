@@ -2,7 +2,7 @@ package me.ldclrcq.filature.sources;
 
 public enum SourceType {
     ENERCOOP("Enercoop"),
-    NEXTCLOUD("Nextcloud");
+    FREE("Free");
 
     private final String name;
 

@@ -3,27 +3,27 @@
     <Toast />
     <div class="card">
       <div class="flex align-items-center justify-content-between mb-4">
-        <h1 class="text-3xl font-bold">Create Connection</h1>
-        <router-link to="/">
-          <Button label="Back to Home" icon="pi pi-home" class="p-button-secondary" />
+        <h1 class="text-3xl font-bold">Edit Connection</h1>
+        <router-link to="/connections">
+          <Button label="Back to Connections" icon="pi pi-arrow-left" class="p-button-secondary" />
         </router-link>
       </div>
 
-      <Card>
-        <template #content>
-          <div v-if="loading" class="flex justify-content-center">
-            <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-          </div>
+      <div v-if="loading" class="flex justify-content-center p-4">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      </div>
 
-          <div v-else-if="!sourcesLoaded || !targetsLoaded" class="p-4 text-center">
+      <Card v-else>
+        <template #content>
+          <div v-if="!sourcesLoaded || !targetsLoaded" class="p-4 text-center">
             <p v-if="!sourcesLoaded && !targetsLoaded" class="text-xl">
               No sources or targets found. Please create them first.
             </p>
             <p v-else-if="!sourcesLoaded" class="text-xl">
-              No source found. Please create a source first.
+              No Enercoop sources found. Please create a source first.
             </p>
             <p v-else class="text-xl">
-              No target found. Please create a target first.
+              No Nextcloud targets found. Please create a target first.
             </p>
 
             <div class="flex justify-content-center gap-2 mt-4">
@@ -36,10 +36,11 @@
             </div>
           </div>
 
-          <form v-else @submit.prevent="createConnection" class="p-fluid">
+          <form v-else @submit.prevent="updateConnection" class="p-fluid">
             <div class="field mb-4">
               <label for="source" class="font-bold flex align-items-center">
-                Source
+                <img src="/icons/enercoop.png" alt="Enercoop" class="mr-2" style="width: 24px; height: 24px;" />
+                Enercoop Source
               </label>
               <select 
                 id="source" 
@@ -48,7 +49,7 @@
                 :class="{'p-invalid': submitted && !connection.sourceConfigurationId}"
                 required
               >
-                <option value="" disabled selected>Select a source</option>
+                <option value="" disabled>Select a source</option>
                 <option v-for="source in sources" :key="source.id" :value="source.id">
                   {{ source.name }}
                 </option>
@@ -58,7 +59,8 @@
 
             <div class="field mb-4">
               <label for="target" class="font-bold flex align-items-center">
-                Target
+                <img src="/icons/nextcloud.png" alt="Nextcloud" class="mr-2" style="width: 24px; height: 24px;" />
+                Nextcloud Target
               </label>
               <select 
                 id="target" 
@@ -67,7 +69,7 @@
                 :class="{'p-invalid': submitted && !connection.targetConfigurationId}"
                 required
               >
-                <option value="" disabled selected>Select a target</option>
+                <option value="" disabled>Select a target</option>
                 <option v-for="target in targets" :key="target.id" :value="target.id">
                   {{ target.name }}
                 </option>
@@ -76,7 +78,7 @@
             </div>
 
             <div class="field mb-4">
-              <label for="targetUploadPath" class="font-bold">Upload Path</label>
+              <label for="targetUploadPath" class="font-bold">Target Upload Path</label>
               <InputText 
                 id="targetUploadPath" 
                 v-model="connection.targetUploadPath" 
@@ -90,7 +92,7 @@
             <div class="flex justify-content-end">
               <Button 
                 type="submit" 
-                label="Create Connection" 
+                label="Update Connection" 
                 icon="pi pi-check" 
                 :loading="submitting"
               />
@@ -104,15 +106,17 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
-import type { SourceSummary, TargetSummary } from '../api/model';
-import {getFilatureAPI} from "../api/service/catalog.ts";
+import type {SourceSummary, TargetSummary} from "../../api/model";
+import {getFilatureAPI} from "../../api/service/catalog.ts";
 
 const router = useRouter();
+const route = useRoute();
 const toast = useToast();
-const api = getFilatureAPI()
+const api = getFilatureAPI();
 
+const connectionId = ref<number>(parseInt(route.params.id as string));
 const sources = ref<SourceSummary[]>([]);
 const targets = ref<TargetSummary[]>([]);
 const sourcesLoaded = ref(false);
@@ -128,7 +132,27 @@ const connection = ref({
 });
 
 onMounted(async () => {
+  if (!connectionId.value) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Connection ID is missing',
+      life: 3000
+    });
+    router.push('/connections');
+    return;
+  }
+
   try {
+    // Load connection details
+    const connectionResponse = await api.getApiConnectionsId(connectionId.value);
+    if (connectionResponse.data) {
+      const connectionData = connectionResponse.data;
+      connection.value.sourceConfigurationId = connectionData.source?.id?.toString() || '';
+      connection.value.targetConfigurationId = connectionData.target?.id?.toString() || '';
+      connection.value.targetUploadPath = connectionData.targetUploadPath || '';
+    }
+
     // Load sources
     const sourcesResponse = await api.getApiSources();
     if (sourcesResponse.data && Array.isArray(sourcesResponse.data)) {
@@ -143,21 +167,23 @@ onMounted(async () => {
       targetsLoaded.value = targets.value.length > 0;
     }
   } catch (error) {
-    console.error('Error loading sources and targets:', error);
+    console.error('Error loading data:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Failed to load sources and targets. Please try again.',
+      detail: 'Failed to load connection details. Please try again.',
       life: 3000
     });
+    router.push('/connections');
   } finally {
     loading.value = false;
   }
 });
 
-const createConnection = async () => {
+const updateConnection = async () => {
   submitted.value = true;
 
+  // Validate all fields are filled
   if (!connection.value.sourceConfigurationId || !connection.value.targetConfigurationId || !connection.value.targetUploadPath) {
     toast.add({
       severity: 'error',
@@ -171,6 +197,11 @@ const createConnection = async () => {
   submitting.value = true;
 
   try {
+    // Since there's no update API for connections, we'll delete the existing one and create a new one
+    // First, delete the existing connection
+    await api.deleteApiConnectionsId(connectionId.value);
+
+    // Then create a new connection with the updated data
     await api.postApiConnections({
       sourceConfigurationId: Number(connection.value.sourceConfigurationId),
       targetConfigurationId: Number(connection.value.targetConfigurationId),
@@ -180,17 +211,17 @@ const createConnection = async () => {
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Connection created successfully',
+      detail: 'Connection updated successfully',
       life: 3000
     });
 
     await router.push('/connections');
   } catch (error) {
-    console.error('Error creating connection:', error);
+    console.error('Error updating connection:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Failed to create connection. Please try again.',
+      detail: 'Failed to update connection. Please try again.',
       life: 3000
     });
   } finally {

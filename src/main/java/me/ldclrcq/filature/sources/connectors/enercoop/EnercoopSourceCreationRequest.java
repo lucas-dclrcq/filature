@@ -1,4 +1,4 @@
-package me.ldclrcq.filature.sources.enercoop;
+package me.ldclrcq.filature.sources.connectors.enercoop;
 
 import jakarta.validation.constraints.NotBlank;
 import me.ldclrcq.filature.sources.SourceType;

@@ -3,7 +3,7 @@
     <Toast />
     <div class="card">
       <div class="flex align-items-center justify-content-between mb-4">
-        <h1 class="text-3xl font-bold">Create Enercoop Source</h1>
+        <h1 class="text-3xl font-bold">Create Free Source</h1>
         <router-link to="/">
           <Button label="Back to Home" icon="pi pi-home" class="p-button-secondary" />
         </router-link>
@@ -13,15 +13,15 @@
         <template #content>
           <form @submit.prevent="createSource" class="p-fluid">
             <div class="field mb-4">
-              <label for="username" class="font-bold">Username</label>
+              <label for="login" class="font-bold">Login</label>
               <InputText 
-                id="username" 
-                v-model="source.username" 
-                placeholder="Enter Enercoop username" 
-                :class="{'p-invalid': submitted && !source.username}"
+                id="login" 
+                v-model="source.login" 
+                placeholder="Enter Free login" 
+                :class="{'p-invalid': submitted && !source.login}"
                 required
               />
-              <small v-if="submitted && !source.username" class="p-error">Username is required.</small>
+              <small v-if="submitted && !source.login" class="p-error">Login is required.</small>
             </div>
             
             <div class="field mb-4">
@@ -30,7 +30,7 @@
                 id="password" 
                 type="password" 
                 v-model="source.password" 
-                placeholder="Enter Enercoop password" 
+                placeholder="Enter Free password" 
                 :class="{'p-invalid': submitted && !source.password}"
                 required
               />
@@ -56,14 +56,14 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
-import {getFilatureAPI} from "../api/service/catalog.ts";
+import {getFilatureAPI} from "../../../api/service/catalog.ts";
 
 const router = useRouter();
 const toast = useToast();
 const api = getFilatureAPI()
 
 const source = ref({
-  username: '',
+  login: '',
   password: ''
 });
 
@@ -74,7 +74,7 @@ const createSource = async () => {
   submitted.value = true;
   
   // Validate all fields are filled
-  if (!source.value.username || !source.value.password) {
+  if (!source.value.login || !source.value.password) {
     toast.add({
       severity: 'error',
       summary: 'Validation Error',
@@ -87,25 +87,25 @@ const createSource = async () => {
   loading.value = true;
   
   try {
-    await api.postApiSourcesEnercoop({
-      username: source.value.username,
+    await api.postApiSourcesFree({
+      login: source.value.login,
       password: source.value.password
     });
     
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Enercoop source created successfully',
+      detail: 'Free source created successfully',
       life: 3000
     });
     
     await router.push('/sources');
   } catch (error) {
-    console.error('Error creating Enercoop source:', error);
+    console.error('Error creating Free source:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Failed to create Enercoop source. Please try again.',
+      detail: 'Failed to create Free source. Please try again.',
       life: 3000
     });
   } finally {

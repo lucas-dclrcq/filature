@@ -13,6 +13,9 @@ import type {
   EnercoopSourceCreationRequest,
   EnercoopSourceSummary,
   EnercoopSourceUpdateRequest,
+  FreeSourceCreationRequest,
+  FreeSourceSummary,
+  FreeSourceUpdateRequest,
   NextcloudTargetCreationRequest,
   NextcloudTargetSummary,
   NextcloudTargetUpdateRequest,
@@ -167,6 +170,61 @@ export const getFilatureAPI = () => {
   };
 
   /**
+   * @summary Create Free Source
+   */
+  const postApiSourcesFree = <TData = AxiosResponse<void>>(
+    freeSourceCreationRequest: FreeSourceCreationRequest,
+    options?: AxiosRequestConfig,
+  ): Promise<TData> => {
+    return axios.default.post(
+      `http://localhost:8080/api/sources/free`,
+      freeSourceCreationRequest,
+      options,
+    );
+  };
+
+  /**
+   * @summary Update Free Source
+   */
+  const putApiSourcesFreeId = <TData = AxiosResponse<void>>(
+    id: number,
+    freeSourceUpdateRequest: FreeSourceUpdateRequest,
+    options?: AxiosRequestConfig,
+  ): Promise<TData> => {
+    return axios.default.put(
+      `http://localhost:8080/api/sources/free/${id}`,
+      freeSourceUpdateRequest,
+      options,
+    );
+  };
+
+  /**
+   * @summary Get Free Source
+   */
+  const getApiSourcesFreeId = <TData = AxiosResponse<FreeSourceSummary>>(
+    id: number,
+    options?: AxiosRequestConfig,
+  ): Promise<TData> => {
+    return axios.default.get(
+      `http://localhost:8080/api/sources/free/${id}`,
+      options,
+    );
+  };
+
+  /**
+   * @summary Delete Source
+   */
+  const deleteApiSourcesFreeId = <TData = AxiosResponse<void>>(
+    id: number,
+    options?: AxiosRequestConfig,
+  ): Promise<TData> => {
+    return axios.default.delete(
+      `http://localhost:8080/api/sources/free/${id}`,
+      options,
+    );
+  };
+
+  /**
    * @summary List Synchronizations
    */
   const getApiSynchronizations = <
@@ -284,6 +342,10 @@ export const getFilatureAPI = () => {
     putApiSourcesEnercoopId,
     getApiSourcesEnercoopId,
     deleteApiSourcesEnercoopId,
+    postApiSourcesFree,
+    putApiSourcesFreeId,
+    getApiSourcesFreeId,
+    deleteApiSourcesFreeId,
     getApiSynchronizations,
     getApiTargets,
     postApiTargetsNextcloud,
@@ -307,6 +369,10 @@ export type PutApiSourcesEnercoopIdResult = AxiosResponse<void>;
 export type GetApiSourcesEnercoopIdResult =
   AxiosResponse<EnercoopSourceSummary>;
 export type DeleteApiSourcesEnercoopIdResult = AxiosResponse<void>;
+export type PostApiSourcesFreeResult = AxiosResponse<void>;
+export type PutApiSourcesFreeIdResult = AxiosResponse<void>;
+export type GetApiSourcesFreeIdResult = AxiosResponse<FreeSourceSummary>;
+export type DeleteApiSourcesFreeIdResult = AxiosResponse<void>;
 export type GetApiSynchronizationsResult = AxiosResponse<
   SynchronizationSummary[]
 >;

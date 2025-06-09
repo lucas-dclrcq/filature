@@ -17,18 +17,20 @@ import 'primeflex/primeflex.css'
 import './style.css'
 
 import App from './App.vue'
-import NextcloudTargetCreate from './views/NextcloudTargetCreate.vue'
-import NextcloudTargetEdit from './views/NextcloudTargetEdit.vue'
-import EnercoopSourceCreate from './views/EnercoopSourceCreate.vue'
-import EnercoopSourceEdit from './views/EnercoopSourceEdit.vue'
-import ConnectionCreate from './views/ConnectionCreate.vue'
-import ConnectionEdit from './views/ConnectionEdit.vue'
-import ConnectionList from './views/ConnectionList.vue'
-import SourcesList from './views/SourcesList.vue'
-import TargetsList from './views/TargetsList.vue'
-import SourceTypeSelect from './views/SourceTypeSelect.vue'
-import TargetTypeSelect from './views/TargetTypeSelect.vue'
-import SynchronizationList from './views/SynchronizationList.vue'
+import NextcloudTargetCreate from './views/targets/nextcloud/NextcloudTargetCreate.vue'
+import NextcloudTargetEdit from './views/targets/nextcloud/NextcloudTargetEdit.vue'
+import EnercoopSourceCreate from './views/sources/enercoop/EnercoopSourceCreate.vue'
+import EnercoopSourceEdit from './views/sources/enercoop/EnercoopSourceEdit.vue'
+import FreeSourceCreate from './views/sources/free/FreeSourceCreate.vue'
+import FreeSourceEdit from './views/sources/free/FreeSourceEdit.vue'
+import ConnectionCreate from './views/connections/ConnectionCreate.vue'
+import ConnectionEdit from './views/connections/ConnectionEdit.vue'
+import ConnectionList from './views/connections/ConnectionList.vue'
+import SourcesList from './views/sources/SourcesList.vue'
+import TargetsList from './views/targets/TargetsList.vue'
+import SourceTypeSelect from './views/sources/SourceTypeSelect.vue'
+import TargetTypeSelect from './views/targets/TargetTypeSelect.vue'
+import SynchronizationList from './views/synchronizations/SynchronizationList.vue'
 
 const routes = [
   { path: '/', component: ConnectionList },
@@ -41,6 +43,8 @@ const routes = [
   { path: '/targets/nextcloud/edit/:id', component: NextcloudTargetEdit },
   { path: '/sources/enercoop/create', component: EnercoopSourceCreate },
   { path: '/sources/enercoop/edit/:id', component: EnercoopSourceEdit },
+  { path: '/sources/free/create', component: FreeSourceCreate },
+  { path: '/sources/free/edit/:id', component: FreeSourceEdit },
   { path: '/connections/create', component: ConnectionCreate },
   { path: '/connections/edit/:id', component: ConnectionEdit },
   { path: '/connections', component: ConnectionList }

@@ -50,8 +50,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
-import type { SynchronizationSummary } from '../api/model';
-import { getFilatureAPI } from "../api/service/catalog.ts";
+import {getFilatureAPI} from "../../api/service/catalog.ts";
+import type {SynchronizationSummary} from "../../api/model";
+
 
 const toast = useToast();
 const api = getFilatureAPI();
