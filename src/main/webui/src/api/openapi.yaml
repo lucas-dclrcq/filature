@@ -540,6 +540,8 @@ components:
           format: int64
         name:
           type: string
+        category:
+          type: string
     SynchronizationStatus:
       type: string
       enum:

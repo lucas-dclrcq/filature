@@ -14,7 +14,7 @@ export default defineConfig({
       /** Type of client implementation */
       client: 'axios',
       /** Base URL of the API, included in the generated client */
-      baseUrl: 'http://localhost:8080'
+      baseUrl: ''
     },
     hooks: {
       /** Formats generated files with Prettier after generation */

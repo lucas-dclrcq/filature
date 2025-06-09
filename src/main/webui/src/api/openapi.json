@@ -737,6 +737,9 @@
           },
           "name" : {
             "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
           }
         }
       },

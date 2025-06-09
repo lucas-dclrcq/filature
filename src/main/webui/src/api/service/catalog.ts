@@ -31,7 +31,7 @@ export const getFilatureAPI = () => {
   const getApiConnections = <TData = AxiosResponse<ConnectionSummary[]>>(
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(`http://localhost:8080/api/connections`, options);
+    return axios.default.get(`/api/connections`, options);
   };
 
   /**
@@ -42,7 +42,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.post(
-      `http://localhost:8080/api/connections`,
+      `/api/connections`,
       connectionCreationRequest,
       options,
     );
@@ -55,7 +55,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.post(
-      `http://localhost:8080/api/connections/synchronize`,
+      `/api/connections/synchronize`,
       undefined,
       options,
     );
@@ -71,7 +71,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.post(
-      `http://localhost:8080/api/connections/${connectionId}/synchronize`,
+      `/api/connections/${connectionId}/synchronize`,
       undefined,
       options,
     );
@@ -84,10 +84,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(
-      `http://localhost:8080/api/connections/${id}`,
-      options,
-    );
+    return axios.default.get(`/api/connections/${id}`, options);
   };
 
   /**
@@ -97,10 +94,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.delete(
-      `http://localhost:8080/api/connections/${id}`,
-      options,
-    );
+    return axios.default.delete(`/api/connections/${id}`, options);
   };
 
   /**
@@ -109,7 +103,7 @@ export const getFilatureAPI = () => {
   const getApiSources = <TData = AxiosResponse<SourceSummary[]>>(
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(`http://localhost:8080/api/sources`, options);
+    return axios.default.get(`/api/sources`, options);
   };
 
   /**
@@ -120,7 +114,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.post(
-      `http://localhost:8080/api/sources/enercoop`,
+      `/api/sources/enercoop`,
       enercoopSourceCreationRequest,
       options,
     );
@@ -135,7 +129,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.put(
-      `http://localhost:8080/api/sources/enercoop/${id}`,
+      `/api/sources/enercoop/${id}`,
       enercoopSourceUpdateRequest,
       options,
     );
@@ -150,10 +144,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(
-      `http://localhost:8080/api/sources/enercoop/${id}`,
-      options,
-    );
+    return axios.default.get(`/api/sources/enercoop/${id}`, options);
   };
 
   /**
@@ -163,10 +154,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.delete(
-      `http://localhost:8080/api/sources/enercoop/${id}`,
-      options,
-    );
+    return axios.default.delete(`/api/sources/enercoop/${id}`, options);
   };
 
   /**
@@ -177,7 +165,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.post(
-      `http://localhost:8080/api/sources/free`,
+      `/api/sources/free`,
       freeSourceCreationRequest,
       options,
     );
@@ -192,7 +180,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.put(
-      `http://localhost:8080/api/sources/free/${id}`,
+      `/api/sources/free/${id}`,
       freeSourceUpdateRequest,
       options,
     );
@@ -205,10 +193,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(
-      `http://localhost:8080/api/sources/free/${id}`,
-      options,
-    );
+    return axios.default.get(`/api/sources/free/${id}`, options);
   };
 
   /**
@@ -218,10 +203,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.delete(
-      `http://localhost:8080/api/sources/free/${id}`,
-      options,
-    );
+    return axios.default.delete(`/api/sources/free/${id}`, options);
   };
 
   /**
@@ -232,10 +214,7 @@ export const getFilatureAPI = () => {
   >(
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(
-      `http://localhost:8080/api/synchronizations`,
-      options,
-    );
+    return axios.default.get(`/api/synchronizations`, options);
   };
 
   /**
@@ -244,7 +223,7 @@ export const getFilatureAPI = () => {
   const getApiTargets = <TData = AxiosResponse<TargetSummary[]>>(
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(`http://localhost:8080/api/targets`, options);
+    return axios.default.get(`/api/targets`, options);
   };
 
   /**
@@ -255,7 +234,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.post(
-      `http://localhost:8080/api/targets/nextcloud`,
+      `/api/targets/nextcloud`,
       nextcloudTargetCreationRequest,
       options,
     );
@@ -270,7 +249,7 @@ export const getFilatureAPI = () => {
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
     return axios.default.put(
-      `http://localhost:8080/api/targets/nextcloud/${id}`,
+      `/api/targets/nextcloud/${id}`,
       nextcloudTargetUpdateRequest,
       options,
     );
@@ -285,10 +264,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(
-      `http://localhost:8080/api/targets/nextcloud/${id}`,
-      options,
-    );
+    return axios.default.get(`/api/targets/nextcloud/${id}`, options);
   };
 
   /**
@@ -298,10 +274,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.delete(
-      `http://localhost:8080/api/targets/nextcloud/${id}`,
-      options,
-    );
+    return axios.default.delete(`/api/targets/nextcloud/${id}`, options);
   };
 
   /**
@@ -311,10 +284,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.get(
-      `http://localhost:8080/api/targets/${id}`,
-      options,
-    );
+    return axios.default.get(`/api/targets/${id}`, options);
   };
 
   /**
@@ -324,10 +294,7 @@ export const getFilatureAPI = () => {
     id: number,
     options?: AxiosRequestConfig,
   ): Promise<TData> => {
-    return axios.default.delete(
-      `http://localhost:8080/api/targets/${id}`,
-      options,
-    );
+    return axios.default.delete(`/api/targets/${id}`, options);
   };
 
   return {

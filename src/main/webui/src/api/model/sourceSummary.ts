@@ -8,4 +8,5 @@
 export interface SourceSummary {
   id?: number;
   name?: string;
+  category?: string;
 }
