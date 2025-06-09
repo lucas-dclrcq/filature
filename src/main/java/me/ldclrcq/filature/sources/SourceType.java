@@ -1,16 +1,14 @@
 package me.ldclrcq.filature.sources;
 
 public enum SourceType {
-    ENERCOOP("Enercoop"),
-    FREE("Free");
+    ENERCOOP("Enercoop", "Utility"),
+    FREE("Free", "Utility");
 
-    private final String name;
+    public final String name;
+    public final String category;
 
-    SourceType(String name) {
+    SourceType(String name, String category) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        this.category = category;
     }
 }

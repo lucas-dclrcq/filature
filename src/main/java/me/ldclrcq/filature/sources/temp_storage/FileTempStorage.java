@@ -25,7 +25,7 @@ public class FileTempStorage {
             try {
                 Files.createDirectories(downloadDir);
             } catch (IOException e) {
-                throw new TempStorageException("Could not create temp directory for source " + sourceType.getName(), e);
+                throw new TempStorageException("Could not create temp directory for source " + sourceType.name, e);
             }
         }
     }
