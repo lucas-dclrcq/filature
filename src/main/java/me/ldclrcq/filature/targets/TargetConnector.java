@@ -4,6 +4,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 public interface TargetConnector {
-    boolean appliesTo(TargetType targetType);
+    TargetType appliesTo();
     void uploadDocuments(Target target, List<Path> downloadedDocuments, String uploadFolder);
 }

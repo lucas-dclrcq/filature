@@ -1,32 +1,28 @@
 package me.ldclrcq.filature.synchronizations;
 
-import io.quarkus.arc.All;
 import io.quarkus.logging.Log;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import me.ldclrcq.filature.configuration.FilatureConfiguration;
 import me.ldclrcq.filature.connections.Connection;
 import me.ldclrcq.filature.sources.SourceConnector;
-import me.ldclrcq.filature.sources.SourceType;
+import me.ldclrcq.filature.sources.SourceConnectors;
 import me.ldclrcq.filature.targets.TargetConnector;
-import me.ldclrcq.filature.targets.TargetType;
+import me.ldclrcq.filature.targets.TargetConnectors;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @ApplicationScoped
 public class Synchronizer {
-    @Inject
-    @All
-    List<SourceConnector> sourceConnectors;
+    private final FilatureConfiguration configuration;
+    private final SourceConnectors sourceConnectors;
+    private final TargetConnectors targetConnectors;
 
-    @Inject
-    @All
-    List<TargetConnector> targetConnectors;
-
-    @Inject
-    FilatureConfiguration configuration;
+    public Synchronizer(FilatureConfiguration configuration, SourceConnectors sourceConnectors, TargetConnectors targetConnectors) {
+        this.configuration = configuration;
+        this.sourceConnectors = sourceConnectors;
+        this.targetConnectors = targetConnectors;
+    }
 
     @Scheduled(every = "{filature.synchronize-every}")
     public void scheduledSynchronize() {
@@ -49,12 +45,12 @@ public class Synchronizer {
         var synchronization = new Synchronization(LocalDateTime.now(), connection);
 
         try {
-            SourceConnector sourceConnector = getSourceConnector(connection.source.type);
+            SourceConnector sourceConnector = this.sourceConnectors.getForSource(connection.source.type);
 
             var downloadedDocuments = sourceConnector.downloadDocuments(connection.source, connection.lastDocumentDownloadedDate);
 
             if (!downloadedDocuments.isEmpty()) {
-                TargetConnector targetConnector = getTargetConnector(connection.target.type);
+                TargetConnector targetConnector = this.targetConnectors.getForTarget(connection.target.type);
                 targetConnector.uploadDocuments(connection.target, downloadedDocuments.downloadedPaths(), connection.targetUploadPath);
 
                 connection.source.configuration.put("lastDocumentDate", downloadedDocuments.lastDocumentDate().toString());
@@ -75,19 +71,5 @@ public class Synchronizer {
             synchronization.persist();
             connection.persist();
         }
-    }
-
-    public SourceConnector getSourceConnector(SourceType sourceType) {
-        return sourceConnectors.stream()
-                .filter(connector -> connector.appliesTo(sourceType))
-                .findFirst()
-                .orElseThrow();
-    }
-
-    public TargetConnector getTargetConnector(TargetType targetType) {
-        return targetConnectors.stream()
-                .filter(connector -> connector.appliesTo(targetType))
-                .findFirst()
-                .orElseThrow();
     }
 }
