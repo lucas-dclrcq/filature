@@ -56,6 +56,7 @@ public class Connection extends PanacheEntityBase {
 
     public static Optional<Connection> findSynchronizedMoreThan(int hoursAgo) {
         return find("where lastSynchronizedAt < ?1", LocalDateTime.now().minusHours(hoursAgo))
+                .withLock(LockModeType.PESSIMISTIC_WRITE)
                 .firstResultOptional();
     }
 

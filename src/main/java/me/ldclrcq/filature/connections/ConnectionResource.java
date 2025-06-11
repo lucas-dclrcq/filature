@@ -59,12 +59,6 @@ public class ConnectionResource {
         synchronizer.synchronizeNow(this.userInfo.getSubject(), connectionId);
     }
 
-    @POST
-    @Path("/synchronize")
-    public void synchronizeAllForUser() {
-        synchronizer.synchronizeAllForUser(this.userInfo.getSubject());
-    }
-
     @GET
     public List<ConnectionSummary> listConnections() {
         return Connection.findForUser(this.userInfo.getSubject())
