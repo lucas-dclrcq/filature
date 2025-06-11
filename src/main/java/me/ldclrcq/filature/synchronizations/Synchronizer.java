@@ -3,6 +3,7 @@ package me.ldclrcq.filature.synchronizations;
 import io.quarkus.logging.Log;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import me.ldclrcq.filature.configuration.FilatureConfiguration;
 import me.ldclrcq.filature.connections.Connection;
 import me.ldclrcq.filature.notifiers.NotifierConnectors;
@@ -28,14 +29,10 @@ public class Synchronizer {
     }
 
     @Scheduled(every = "{filature.synchronize-every}")
+    @Transactional
     public void scheduledSynchronize() {
         Connection.findSynchronizedMoreThan(configuration.synchronizeOlderThanHours())
                 .ifPresentOrElse(this::synchronize, () -> Log.info("No connections to synchronize"));
-    }
-
-    public void synchronizeAllForUser(String userId) {
-        Connection.findForUser(userId)
-                .forEach(this::synchronize);
     }
 
     public void synchronizeNow(String userId, int connectionId) {
