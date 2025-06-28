@@ -9,6 +9,7 @@ import me.ldclrcq.filature.connections.Connection;
 import me.ldclrcq.filature.notifiers.NotifierConnectors;
 import me.ldclrcq.filature.sources.SourceConnector;
 import me.ldclrcq.filature.sources.SourceConnectors;
+import me.ldclrcq.filature.sources.temp_storage.FileTempStorage;
 import me.ldclrcq.filature.targets.TargetConnector;
 import me.ldclrcq.filature.targets.TargetConnectors;
 
@@ -20,12 +21,14 @@ public class Synchronizer {
     private final SourceConnectors sourceConnectors;
     private final TargetConnectors targetConnectors;
     private final NotifierConnectors notifierConnectors;
+    private final FileTempStorage fileTempStorage;
 
-    public Synchronizer(FilatureConfiguration configuration, SourceConnectors sourceConnectors, TargetConnectors targetConnectors, NotifierConnectors notifierConnectors) {
+    public Synchronizer(FilatureConfiguration configuration, SourceConnectors sourceConnectors, TargetConnectors targetConnectors, NotifierConnectors notifierConnectors, FileTempStorage fileTempStorage) {
         this.configuration = configuration;
         this.sourceConnectors = sourceConnectors;
         this.targetConnectors = targetConnectors;
         this.notifierConnectors = notifierConnectors;
+        this.fileTempStorage = fileTempStorage;
     }
 
     @Scheduled(every = "{filature.synchronize-every}")
@@ -53,10 +56,13 @@ public class Synchronizer {
                 TargetConnector targetConnector = this.targetConnectors.getForType(connection.target.type);
                 targetConnector.uploadDocuments(connection.target, downloadedDocuments.downloadedPaths(), connection.targetUploadPath);
 
-                connection.source.configuration.put("lastDocumentDate", downloadedDocuments.lastDocumentDate().toString());
+                connection.lastDocumentDownloadedDate = downloadedDocuments.lastDocumentDate();
             } else {
                 Log.info("No new documents to synchronize for connection " + connection.id + " (" + connection.source.type + " -> " + connection.target.type + ")");
             }
+
+            fileTempStorage.cleanTempFiles(connection.source.type);
+
             synchronization.status = SynchronizationStatus.SUCCESS;
             Log.info("Synchronization for connection " + connection.id + " (" + connection.source.type + " -> " + connection.target.type + ") completed successfully");
         } catch (Exception e) {

@@ -49,19 +49,6 @@ export const getFilatureAPI = () => {
   };
 
   /**
-   * @summary Synchronize All For User
-   */
-  const postApiConnectionsSynchronize = <TData = AxiosResponse<void>>(
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.post(
-      `/api/connections/synchronize`,
-      undefined,
-      options,
-    );
-  };
-
-  /**
    * @summary Synchronize Now
    */
   const postApiConnectionsConnectionIdSynchronize = <
@@ -300,7 +287,6 @@ export const getFilatureAPI = () => {
   return {
     getApiConnections,
     postApiConnections,
-    postApiConnectionsSynchronize,
     postApiConnectionsConnectionIdSynchronize,
     getApiConnectionsId,
     deleteApiConnectionsId,
@@ -325,7 +311,6 @@ export const getFilatureAPI = () => {
 };
 export type GetApiConnectionsResult = AxiosResponse<ConnectionSummary[]>;
 export type PostApiConnectionsResult = AxiosResponse<void>;
-export type PostApiConnectionsSynchronizeResult = AxiosResponse<void>;
 export type PostApiConnectionsConnectionIdSynchronizeResult =
   AxiosResponse<void>;
 export type GetApiConnectionsIdResult = AxiosResponse<ConnectionSummary>;

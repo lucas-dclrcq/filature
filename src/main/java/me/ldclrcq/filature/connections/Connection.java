@@ -62,6 +62,7 @@ public class Connection extends PanacheEntityBase {
 
     public static Optional<Connection> findById(String userId, int connectionId) {
         return find("userId = ?1 and id = ?2", userId, connectionId)
+                .withLock(LockModeType.PESSIMISTIC_WRITE)
                 .firstResultOptional();
     }
 
