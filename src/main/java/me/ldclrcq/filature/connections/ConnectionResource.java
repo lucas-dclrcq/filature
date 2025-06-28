@@ -60,6 +60,7 @@ public class ConnectionResource {
     }
 
     @GET
+    @Transactional
     public List<ConnectionSummary> listConnections() {
         return Connection.findForUser(this.userInfo.getSubject())
                 .stream()
@@ -70,6 +71,7 @@ public class ConnectionResource {
     @GET
     @Path("/{id}")
     @APIResponseSchema(ConnectionSummary.class)
+    @Transactional
     public Response getConnection(@PathParam("id") Long id) {
         return Connection
                 .findById(this.userInfo.getSubject(), id.intValue())
