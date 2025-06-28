@@ -48,6 +48,8 @@ public class Synchronizer {
         var synchronization = new Synchronization(LocalDateTime.now(), connection);
 
         try {
+            fileTempStorage.cleanTempFiles(connection.source.type);
+
             SourceConnector sourceConnector = this.sourceConnectors.getForType(connection.source.type);
 
             var downloadedDocuments = sourceConnector.downloadDocuments(connection.source, connection.lastDocumentDownloadedDate);
