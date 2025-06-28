@@ -57,17 +57,6 @@
         "summary" : "Create Connection"
       }
     },
-    "/api/connections/synchronize" : {
-      "post" : {
-        "tags" : [ "Connections" ],
-        "responses" : {
-          "201" : {
-            "description" : "Created"
-          }
-        },
-        "summary" : "Synchronize All For User"
-      }
-    },
     "/api/connections/{connectionId}/synchronize" : {
       "post" : {
         "tags" : [ "Connections" ],
