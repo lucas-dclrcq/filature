@@ -33,6 +33,9 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
 
+      - name: Ensure browsers are installed
+        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps chromium"
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3
@@ -53,7 +56,7 @@ jobs:
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6
         with:
           context: .
-          file: src/main/docker/Dockerfile.jvm
-          platforms: linux/amd64,linux/arm64
+          file: src/main/docker/Dockerfile
+          platforms: linux/amd64
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ghcr.io/${{ github.repository_owner }}/filature:latest
+          tags: ghcr.io/${{ github.repository_owner }}/filature:development
