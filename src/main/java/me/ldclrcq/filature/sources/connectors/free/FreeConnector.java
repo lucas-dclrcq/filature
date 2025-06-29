@@ -89,7 +89,8 @@ public class FreeConnector implements SourceConnector {
                 }
             }
 
-            return new DownloadResult(downloadedBills, newLastDocumentDownloadDate.atStartOfDay());
+            LocalDateTime lastDocumentDate = newLastDocumentDownloadDate == null ? null : newLastDocumentDownloadDate.atStartOfDay();
+            return new DownloadResult(downloadedBills, lastDocumentDate);
         }
     }
 
