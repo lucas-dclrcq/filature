@@ -6,7 +6,7 @@
  */
 
 export interface FreeSourceSummary {
-  id?: number;
-  name?: string;
-  login?: string;
+    id?: number;
+    name?: string;
+    login?: string;
 }

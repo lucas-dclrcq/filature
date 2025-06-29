@@ -8,331 +8,248 @@ import * as axios from "axios";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
 import type {
-  ConnectionCreationRequest,
-  ConnectionSummary,
-  EnercoopSourceCreationRequest,
-  EnercoopSourceSummary,
-  EnercoopSourceUpdateRequest,
-  FreeSourceCreationRequest,
-  FreeSourceSummary,
-  FreeSourceUpdateRequest,
-  NextcloudTargetCreationRequest,
-  NextcloudTargetSummary,
-  NextcloudTargetUpdateRequest,
-  SourceSummary,
-  SynchronizationSummary,
-  TargetSummary,
+    ConnectionCreationRequest,
+    ConnectionSummary,
+    EnercoopSourceCreationRequest,
+    EnercoopSourceSummary,
+    EnercoopSourceUpdateRequest,
+    FreeSourceCreationRequest,
+    FreeSourceSummary,
+    FreeSourceUpdateRequest,
+    NextcloudTargetCreationRequest,
+    NextcloudTargetSummary,
+    NextcloudTargetUpdateRequest,
+    SourceSummary,
+    SynchronizationSummary,
+    TargetSummary,
 } from "../model";
 
 export const getFilatureAPI = () => {
-  /**
-   * @summary List Connections
-   */
-  const getApiConnections = <TData = AxiosResponse<ConnectionSummary[]>>(
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/connections`, options);
-  };
+    /**
+     * @summary List Connections
+     */
+    const getApiConnections = <TData = AxiosResponse<ConnectionSummary[]>>(options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/connections`, options);
+    };
 
-  /**
-   * @summary Create Connection
-   */
-  const postApiConnections = <TData = AxiosResponse<void>>(
-    connectionCreationRequest: ConnectionCreationRequest,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.post(
-      `/api/connections`,
-      connectionCreationRequest,
-      options,
-    );
-  };
+    /**
+     * @summary Create Connection
+     */
+    const postApiConnections = <TData = AxiosResponse<void>>(
+        connectionCreationRequest: ConnectionCreationRequest,
+        options?: AxiosRequestConfig,
+    ): Promise<TData> => {
+        return axios.default.post(`/api/connections`, connectionCreationRequest, options);
+    };
 
-  /**
-   * @summary Synchronize Now
-   */
-  const postApiConnectionsConnectionIdSynchronize = <
-    TData = AxiosResponse<void>,
-  >(
-    connectionId: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.post(
-      `/api/connections/${connectionId}/synchronize`,
-      undefined,
-      options,
-    );
-  };
+    /**
+     * @summary Synchronize Now
+     */
+    const postApiConnectionsConnectionIdSynchronize = <TData = AxiosResponse<void>>(
+        connectionId: number,
+        options?: AxiosRequestConfig,
+    ): Promise<TData> => {
+        return axios.default.post(`/api/connections/${connectionId}/synchronize`, undefined, options);
+    };
 
-  /**
-   * @summary Get Connection
-   */
-  const getApiConnectionsId = <TData = AxiosResponse<ConnectionSummary>>(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/connections/${id}`, options);
-  };
+    /**
+     * @summary Get Connection
+     */
+    const getApiConnectionsId = <TData = AxiosResponse<ConnectionSummary>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/connections/${id}`, options);
+    };
 
-  /**
-   * @summary Delete Connection
-   */
-  const deleteApiConnectionsId = <TData = AxiosResponse<void>>(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.delete(`/api/connections/${id}`, options);
-  };
+    /**
+     * @summary Delete Connection
+     */
+    const deleteApiConnectionsId = <TData = AxiosResponse<void>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.delete(`/api/connections/${id}`, options);
+    };
 
-  /**
-   * @summary List Sources
-   */
-  const getApiSources = <TData = AxiosResponse<SourceSummary[]>>(
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/sources`, options);
-  };
+    /**
+     * @summary List Sources
+     */
+    const getApiSources = <TData = AxiosResponse<SourceSummary[]>>(options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/sources`, options);
+    };
 
-  /**
-   * @summary Create Enercoop Source
-   */
-  const postApiSourcesEnercoop = <TData = AxiosResponse<void>>(
-    enercoopSourceCreationRequest: EnercoopSourceCreationRequest,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.post(
-      `/api/sources/enercoop`,
-      enercoopSourceCreationRequest,
-      options,
-    );
-  };
+    /**
+     * @summary Create Enercoop Source
+     */
+    const postApiSourcesEnercoop = <TData = AxiosResponse<void>>(
+        enercoopSourceCreationRequest: EnercoopSourceCreationRequest,
+        options?: AxiosRequestConfig,
+    ): Promise<TData> => {
+        return axios.default.post(`/api/sources/enercoop`, enercoopSourceCreationRequest, options);
+    };
 
-  /**
-   * @summary Update Enercoop Source
-   */
-  const putApiSourcesEnercoopId = <TData = AxiosResponse<void>>(
-    id: number,
-    enercoopSourceUpdateRequest: EnercoopSourceUpdateRequest,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.put(
-      `/api/sources/enercoop/${id}`,
-      enercoopSourceUpdateRequest,
-      options,
-    );
-  };
+    /**
+     * @summary Update Enercoop Source
+     */
+    const putApiSourcesEnercoopId = <TData = AxiosResponse<void>>(
+        id: number,
+        enercoopSourceUpdateRequest: EnercoopSourceUpdateRequest,
+        options?: AxiosRequestConfig,
+    ): Promise<TData> => {
+        return axios.default.put(`/api/sources/enercoop/${id}`, enercoopSourceUpdateRequest, options);
+    };
 
-  /**
-   * @summary Get Enercoop Source
-   */
-  const getApiSourcesEnercoopId = <
-    TData = AxiosResponse<EnercoopSourceSummary>,
-  >(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/sources/enercoop/${id}`, options);
-  };
+    /**
+     * @summary Get Enercoop Source
+     */
+    const getApiSourcesEnercoopId = <TData = AxiosResponse<EnercoopSourceSummary>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/sources/enercoop/${id}`, options);
+    };
 
-  /**
-   * @summary Delete Source
-   */
-  const deleteApiSourcesEnercoopId = <TData = AxiosResponse<void>>(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.delete(`/api/sources/enercoop/${id}`, options);
-  };
+    /**
+     * @summary Delete Source
+     */
+    const deleteApiSourcesEnercoopId = <TData = AxiosResponse<void>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.delete(`/api/sources/enercoop/${id}`, options);
+    };
 
-  /**
-   * @summary Create Free Source
-   */
-  const postApiSourcesFree = <TData = AxiosResponse<void>>(
-    freeSourceCreationRequest: FreeSourceCreationRequest,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.post(
-      `/api/sources/free`,
-      freeSourceCreationRequest,
-      options,
-    );
-  };
+    /**
+     * @summary Create Free Source
+     */
+    const postApiSourcesFree = <TData = AxiosResponse<void>>(
+        freeSourceCreationRequest: FreeSourceCreationRequest,
+        options?: AxiosRequestConfig,
+    ): Promise<TData> => {
+        return axios.default.post(`/api/sources/free`, freeSourceCreationRequest, options);
+    };
 
-  /**
-   * @summary Update Free Source
-   */
-  const putApiSourcesFreeId = <TData = AxiosResponse<void>>(
-    id: number,
-    freeSourceUpdateRequest: FreeSourceUpdateRequest,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.put(
-      `/api/sources/free/${id}`,
-      freeSourceUpdateRequest,
-      options,
-    );
-  };
+    /**
+     * @summary Update Free Source
+     */
+    const putApiSourcesFreeId = <TData = AxiosResponse<void>>(
+        id: number,
+        freeSourceUpdateRequest: FreeSourceUpdateRequest,
+        options?: AxiosRequestConfig,
+    ): Promise<TData> => {
+        return axios.default.put(`/api/sources/free/${id}`, freeSourceUpdateRequest, options);
+    };
 
-  /**
-   * @summary Get Free Source
-   */
-  const getApiSourcesFreeId = <TData = AxiosResponse<FreeSourceSummary>>(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/sources/free/${id}`, options);
-  };
+    /**
+     * @summary Get Free Source
+     */
+    const getApiSourcesFreeId = <TData = AxiosResponse<FreeSourceSummary>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/sources/free/${id}`, options);
+    };
 
-  /**
-   * @summary Delete Source
-   */
-  const deleteApiSourcesFreeId = <TData = AxiosResponse<void>>(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.delete(`/api/sources/free/${id}`, options);
-  };
+    /**
+     * @summary Delete Source
+     */
+    const deleteApiSourcesFreeId = <TData = AxiosResponse<void>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.delete(`/api/sources/free/${id}`, options);
+    };
 
-  /**
-   * @summary List Synchronizations
-   */
-  const getApiSynchronizations = <
-    TData = AxiosResponse<SynchronizationSummary[]>,
-  >(
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/synchronizations`, options);
-  };
+    /**
+     * @summary List Synchronizations
+     */
+    const getApiSynchronizations = <TData = AxiosResponse<SynchronizationSummary[]>>(options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/synchronizations`, options);
+    };
 
-  /**
-   * @summary List Targets
-   */
-  const getApiTargets = <TData = AxiosResponse<TargetSummary[]>>(
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/targets`, options);
-  };
+    /**
+     * @summary List Targets
+     */
+    const getApiTargets = <TData = AxiosResponse<TargetSummary[]>>(options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/targets`, options);
+    };
 
-  /**
-   * @summary Create Nextcloud Target
-   */
-  const postApiTargetsNextcloud = <TData = AxiosResponse<void>>(
-    nextcloudTargetCreationRequest: NextcloudTargetCreationRequest,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.post(
-      `/api/targets/nextcloud`,
-      nextcloudTargetCreationRequest,
-      options,
-    );
-  };
+    /**
+     * @summary Create Nextcloud Target
+     */
+    const postApiTargetsNextcloud = <TData = AxiosResponse<void>>(
+        nextcloudTargetCreationRequest: NextcloudTargetCreationRequest,
+        options?: AxiosRequestConfig,
+    ): Promise<TData> => {
+        return axios.default.post(`/api/targets/nextcloud`, nextcloudTargetCreationRequest, options);
+    };
 
-  /**
-   * @summary Update Nextcloud Target
-   */
-  const putApiTargetsNextcloudId = <TData = AxiosResponse<void>>(
-    id: number,
-    nextcloudTargetUpdateRequest: NextcloudTargetUpdateRequest,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.put(
-      `/api/targets/nextcloud/${id}`,
-      nextcloudTargetUpdateRequest,
-      options,
-    );
-  };
+    /**
+     * @summary Update Nextcloud Target
+     */
+    const putApiTargetsNextcloudId = <TData = AxiosResponse<void>>(
+        id: number,
+        nextcloudTargetUpdateRequest: NextcloudTargetUpdateRequest,
+        options?: AxiosRequestConfig,
+    ): Promise<TData> => {
+        return axios.default.put(`/api/targets/nextcloud/${id}`, nextcloudTargetUpdateRequest, options);
+    };
 
-  /**
-   * @summary Get Nextcloud Target
-   */
-  const getApiTargetsNextcloudId = <
-    TData = AxiosResponse<NextcloudTargetSummary>,
-  >(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/targets/nextcloud/${id}`, options);
-  };
+    /**
+     * @summary Get Nextcloud Target
+     */
+    const getApiTargetsNextcloudId = <TData = AxiosResponse<NextcloudTargetSummary>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/targets/nextcloud/${id}`, options);
+    };
 
-  /**
-   * @summary Delete Nextcloud Target
-   */
-  const deleteApiTargetsNextcloudId = <TData = AxiosResponse<void>>(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.delete(`/api/targets/nextcloud/${id}`, options);
-  };
+    /**
+     * @summary Delete Nextcloud Target
+     */
+    const deleteApiTargetsNextcloudId = <TData = AxiosResponse<void>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.delete(`/api/targets/nextcloud/${id}`, options);
+    };
 
-  /**
-   * @summary Get Target
-   */
-  const getApiTargetsId = <TData = AxiosResponse<TargetSummary>>(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.get(`/api/targets/${id}`, options);
-  };
+    /**
+     * @summary Get Target
+     */
+    const getApiTargetsId = <TData = AxiosResponse<TargetSummary>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.get(`/api/targets/${id}`, options);
+    };
 
-  /**
-   * @summary Delete Target
-   */
-  const deleteApiTargetsId = <TData = AxiosResponse<void>>(
-    id: number,
-    options?: AxiosRequestConfig,
-  ): Promise<TData> => {
-    return axios.default.delete(`/api/targets/${id}`, options);
-  };
+    /**
+     * @summary Delete Target
+     */
+    const deleteApiTargetsId = <TData = AxiosResponse<void>>(id: number, options?: AxiosRequestConfig): Promise<TData> => {
+        return axios.default.delete(`/api/targets/${id}`, options);
+    };
 
-  return {
-    getApiConnections,
-    postApiConnections,
-    postApiConnectionsConnectionIdSynchronize,
-    getApiConnectionsId,
-    deleteApiConnectionsId,
-    getApiSources,
-    postApiSourcesEnercoop,
-    putApiSourcesEnercoopId,
-    getApiSourcesEnercoopId,
-    deleteApiSourcesEnercoopId,
-    postApiSourcesFree,
-    putApiSourcesFreeId,
-    getApiSourcesFreeId,
-    deleteApiSourcesFreeId,
-    getApiSynchronizations,
-    getApiTargets,
-    postApiTargetsNextcloud,
-    putApiTargetsNextcloudId,
-    getApiTargetsNextcloudId,
-    deleteApiTargetsNextcloudId,
-    getApiTargetsId,
-    deleteApiTargetsId,
-  };
+    return {
+        getApiConnections,
+        postApiConnections,
+        postApiConnectionsConnectionIdSynchronize,
+        getApiConnectionsId,
+        deleteApiConnectionsId,
+        getApiSources,
+        postApiSourcesEnercoop,
+        putApiSourcesEnercoopId,
+        getApiSourcesEnercoopId,
+        deleteApiSourcesEnercoopId,
+        postApiSourcesFree,
+        putApiSourcesFreeId,
+        getApiSourcesFreeId,
+        deleteApiSourcesFreeId,
+        getApiSynchronizations,
+        getApiTargets,
+        postApiTargetsNextcloud,
+        putApiTargetsNextcloudId,
+        getApiTargetsNextcloudId,
+        deleteApiTargetsNextcloudId,
+        getApiTargetsId,
+        deleteApiTargetsId,
+    };
 };
 export type GetApiConnectionsResult = AxiosResponse<ConnectionSummary[]>;
 export type PostApiConnectionsResult = AxiosResponse<void>;
-export type PostApiConnectionsConnectionIdSynchronizeResult =
-  AxiosResponse<void>;
+export type PostApiConnectionsConnectionIdSynchronizeResult = AxiosResponse<void>;
 export type GetApiConnectionsIdResult = AxiosResponse<ConnectionSummary>;
 export type DeleteApiConnectionsIdResult = AxiosResponse<void>;
 export type GetApiSourcesResult = AxiosResponse<SourceSummary[]>;
 export type PostApiSourcesEnercoopResult = AxiosResponse<void>;
 export type PutApiSourcesEnercoopIdResult = AxiosResponse<void>;
-export type GetApiSourcesEnercoopIdResult =
-  AxiosResponse<EnercoopSourceSummary>;
+export type GetApiSourcesEnercoopIdResult = AxiosResponse<EnercoopSourceSummary>;
 export type DeleteApiSourcesEnercoopIdResult = AxiosResponse<void>;
 export type PostApiSourcesFreeResult = AxiosResponse<void>;
 export type PutApiSourcesFreeIdResult = AxiosResponse<void>;
 export type GetApiSourcesFreeIdResult = AxiosResponse<FreeSourceSummary>;
 export type DeleteApiSourcesFreeIdResult = AxiosResponse<void>;
-export type GetApiSynchronizationsResult = AxiosResponse<
-  SynchronizationSummary[]
->;
+export type GetApiSynchronizationsResult = AxiosResponse<SynchronizationSummary[]>;
 export type GetApiTargetsResult = AxiosResponse<TargetSummary[]>;
 export type PostApiTargetsNextcloudResult = AxiosResponse<void>;
 export type PutApiTargetsNextcloudIdResult = AxiosResponse<void>;
-export type GetApiTargetsNextcloudIdResult =
-  AxiosResponse<NextcloudTargetSummary>;
+export type GetApiTargetsNextcloudIdResult = AxiosResponse<NextcloudTargetSummary>;
 export type DeleteApiTargetsNextcloudIdResult = AxiosResponse<void>;
 export type GetApiTargetsIdResult = AxiosResponse<TargetSummary>;
 export type DeleteApiTargetsIdResult = AxiosResponse<void>;

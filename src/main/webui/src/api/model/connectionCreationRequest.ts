@@ -6,8 +6,8 @@
  */
 
 export interface ConnectionCreationRequest {
-  sourceConfigurationId: number;
-  targetConfigurationId: number;
-  /** @pattern \S */
-  targetUploadPath: string;
+    sourceConfigurationId: number;
+    targetConfigurationId: number;
+    /** @pattern \S */
+    targetUploadPath: string;
 }

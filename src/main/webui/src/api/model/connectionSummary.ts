@@ -8,9 +8,9 @@ import type { SourceSummary } from "./sourceSummary";
 import type { TargetSummary } from "./targetSummary";
 
 export interface ConnectionSummary {
-  id?: number;
-  userId?: string;
-  source?: SourceSummary;
-  target?: TargetSummary;
-  targetUploadPath?: string;
+    id?: number;
+    userId?: string;
+    source?: SourceSummary;
+    target?: TargetSummary;
+    targetUploadPath?: string;
 }

@@ -5,11 +5,10 @@
  * OpenAPI spec version: 1.0-SNAPSHOT
  */
 
-export type SynchronizationStatus =
-  (typeof SynchronizationStatus)[keyof typeof SynchronizationStatus];
+export type SynchronizationStatus = (typeof SynchronizationStatus)[keyof typeof SynchronizationStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SynchronizationStatus = {
-  SUCCESS: "SUCCESS",
-  FAILURE: "FAILURE",
+    SUCCESS: "SUCCESS",
+    FAILURE: "FAILURE",
 } as const;

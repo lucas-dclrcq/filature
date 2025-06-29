@@ -11,4 +11,14 @@ public interface FilatureConfiguration {
     int synchronizeOlderThanHours();
     @WithDefault("5m")
     String synchronizeEvery();
+
+    Playwright playwright();
+
+    interface Playwright {
+        @WithDefault("true")
+        boolean headless();
+
+        @WithDefault("true")
+        boolean disableGpu();
+    }
 }

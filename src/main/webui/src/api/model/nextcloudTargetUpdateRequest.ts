@@ -6,10 +6,10 @@
  */
 
 export interface NextcloudTargetUpdateRequest {
-  /** @pattern \S */
-  username: string;
-  /** @pattern \S */
-  password: string;
-  /** @pattern \S */
-  url: string;
+    /** @pattern \S */
+    username: string;
+    /** @pattern \S */
+    password: string;
+    /** @pattern \S */
+    url: string;
 }

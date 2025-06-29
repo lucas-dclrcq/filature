@@ -1,4 +1,4 @@
-package me.ldclrcq.filature.sources.temp_storage;
+package me.ldclrcq.filature.temp_storage;
 
 public class TempStorageException extends RuntimeException {
     public TempStorageException(String message, Throwable cause) {

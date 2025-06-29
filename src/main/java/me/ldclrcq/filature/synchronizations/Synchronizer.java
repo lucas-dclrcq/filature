@@ -9,7 +9,7 @@ import me.ldclrcq.filature.connections.Connection;
 import me.ldclrcq.filature.notifiers.NotifierConnectors;
 import me.ldclrcq.filature.sources.SourceConnector;
 import me.ldclrcq.filature.sources.SourceConnectors;
-import me.ldclrcq.filature.sources.temp_storage.FileTempStorage;
+import me.ldclrcq.filature.temp_storage.FileTempStorage;
 import me.ldclrcq.filature.targets.TargetConnector;
 import me.ldclrcq.filature.targets.TargetConnectors;
 
