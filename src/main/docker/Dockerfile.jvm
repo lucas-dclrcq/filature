@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/playwright:v1.53.0-noble
+
+RUN apt-get update && \
+    apt-get install -y openjdk-21-jdk && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --chown=1001 target/quarkus-app/lib/ /deployments/lib/
+COPY --chown=1001 target/quarkus-app/*.jar /deployments/
+COPY --chown=1001 target/quarkus-app/app/ /deployments/app/
+COPY --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
+
+EXPOSE 8080
+USER 1001
+
+WORKDIR /deployments
+
+CMD ["/usr/lib/jvm/java-21-openjdk-amd64/bin/java", "-jar", "quarkus-run.jar", "-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"]
