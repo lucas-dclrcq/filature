@@ -6,8 +6,8 @@
  */
 
 export interface EnercoopSourceCreationRequest {
-  /** @pattern \S */
-  username: string;
-  /** @pattern \S */
-  password: string;
+    /** @pattern \S */
+    username: string;
+    /** @pattern \S */
+    password: string;
 }

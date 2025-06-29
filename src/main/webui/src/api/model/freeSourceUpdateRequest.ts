@@ -6,8 +6,8 @@
  */
 
 export interface FreeSourceUpdateRequest {
-  /** @pattern \S */
-  login: string;
-  /** @pattern \S */
-  password: string;
+    /** @pattern \S */
+    login: string;
+    /** @pattern \S */
+    password: string;
 }

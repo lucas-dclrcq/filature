@@ -6,8 +6,8 @@
  */
 
 export interface NextcloudTargetSummary {
-  id?: number;
-  name?: string;
-  username?: string;
-  url?: string;
+    id?: number;
+    name?: string;
+    username?: string;
+    url?: string;
 }

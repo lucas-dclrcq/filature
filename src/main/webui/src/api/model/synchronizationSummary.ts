@@ -8,10 +8,10 @@ import type { SynchronizationStatus } from "./synchronizationStatus";
 import type { LocalDateTime } from "./localDateTime";
 
 export interface SynchronizationSummary {
-  id?: number;
-  connectionId?: number;
-  status?: SynchronizationStatus;
-  error?: string;
-  startedAt?: LocalDateTime;
-  endedAt?: LocalDateTime;
+    id?: number;
+    connectionId?: number;
+    status?: SynchronizationStatus;
+    error?: string;
+    startedAt?: LocalDateTime;
+    endedAt?: LocalDateTime;
 }
