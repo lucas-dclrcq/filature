@@ -5,7 +5,8 @@
  * OpenAPI spec version: 1.1.0-SNAPSHOT
  */
 
-export interface TargetSummary {
+export interface IleoSourceSummary {
     id?: number;
     name?: string;
+    login?: string;
 }

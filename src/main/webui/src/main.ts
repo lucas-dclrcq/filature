@@ -24,6 +24,8 @@ import EnercoopSourceCreate from './views/sources/enercoop/EnercoopSourceCreate.
 import EnercoopSourceEdit from './views/sources/enercoop/EnercoopSourceEdit.vue'
 import FreeSourceCreate from './views/sources/free/FreeSourceCreate.vue'
 import FreeSourceEdit from './views/sources/free/FreeSourceEdit.vue'
+import IleoSourceCreate from './views/sources/ileo/IleoSourceCreate.vue'
+import IleoSourceEdit from './views/sources/ileo/IleoSourceEdit.vue'
 import ConnectionCreate from './views/connections/ConnectionCreate.vue'
 import ConnectionEdit from './views/connections/ConnectionEdit.vue'
 import ConnectionList from './views/connections/ConnectionList.vue'
@@ -46,6 +48,8 @@ const routes = [
   { path: '/sources/enercoop/edit/:id', component: EnercoopSourceEdit },
   { path: '/sources/free/create', component: FreeSourceCreate },
   { path: '/sources/free/edit/:id', component: FreeSourceEdit },
+  { path: '/sources/ileo/create', component: IleoSourceCreate },
+  { path: '/sources/ileo/edit/:id', component: IleoSourceEdit },
   { path: '/connections/create', component: ConnectionCreate },
   { path: '/connections/edit/:id', component: ConnectionEdit },
   { path: '/connections', component: ConnectionList }

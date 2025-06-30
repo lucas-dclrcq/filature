@@ -36,6 +36,12 @@ const sources = ref([
     name: "free",
     description: "French telecommunications company",
     iconPath: "/icons/free.png"
+  },
+  {
+    title: "Ileo",
+    name: "ileo",
+    description: "Water supplier",
+    iconPath: "/icons/ileo.png"
   }
 ]);
 

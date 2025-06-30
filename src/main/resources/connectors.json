@@ -1,0 +1,28 @@
+{
+    "sources": [
+        {
+            "id": "free",
+            "name": "Free",
+            "description": "",
+            "category": "utility",
+            "parameters": [
+                {
+                    "name": "login",
+                    "rules": [
+                        "required"
+                    ]z
+                },
+                {
+                    "name": "password",
+                    "rules": [
+                        "required",
+                        "secret"
+                    ]
+                }
+            ]
+        }
+    ],
+    "targets": [
+
+    ]
+}

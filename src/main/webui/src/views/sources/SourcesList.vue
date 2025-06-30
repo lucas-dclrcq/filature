@@ -25,7 +25,7 @@
           <template #body="slotProps">
             <div class="flex align-items-center">
               <img 
-                :src="slotProps.data.name === 'Enercoop' ? '/icons/enercoop.png' : '/icons/free.png'" 
+                :src="getSourceIcon(slotProps.data.name)" 
                 :alt="slotProps.data.name" 
                 style="width: 24px; height: 24px;" 
               />
@@ -135,10 +135,19 @@ const deleteSource = async () => {
   deleteLoading.value = true;
 
   try {
-    if (sourceToDelete.value.name === 'Enercoop') {
-      await api.deleteApiSourcesEnercoopId(sourceToDelete.value.id);
-    } else {
-      await api.deleteApiSourcesFreeId(sourceToDelete.value.id);
+    const sourceType = getSourceType(sourceToDelete.value.name);
+    switch (sourceType) {
+      case 'enercoop':
+        await api.deleteApiSourcesEnercoopId(sourceToDelete.value.id);
+        break;
+      case 'free':
+        await api.deleteApiSourcesFreeId(sourceToDelete.value.id);
+        break;
+      case 'ileo':
+        await api.deleteApiSourcesIleoId(sourceToDelete.value.id);
+        break;
+      default:
+        throw new Error(`Unknown source type: ${sourceType}`);
     }
 
     toast.add({
@@ -163,9 +172,35 @@ const deleteSource = async () => {
   }
 };
 
+const getSourceIcon = (sourceName: string) => {
+  switch (sourceName) {
+    case 'Enercoop':
+      return '/icons/enercoop.png';
+    case 'Free':
+      return '/icons/free.png';
+    case 'Ileo':
+      return '/icons/ileo.png';
+    default:
+      return '/icons/free.png'; // Default icon
+  }
+};
+
+const getSourceType = (sourceName: string) => {
+  switch (sourceName) {
+    case 'Enercoop':
+      return 'enercoop';
+    case 'Free':
+      return 'free';
+    case 'Ileo':
+      return 'ileo';
+    default:
+      return 'free'; // Default type
+  }
+};
+
 const editSource = (source: SourceSummary) => {
   console.log('Edit source:', source);
-  const sourceType = source.name === 'Enercoop' ? 'enercoop' : 'free';
+  const sourceType = getSourceType(source.name);
   router.push(`/sources/${sourceType}/edit/${source.id}`);
 };
 </script>

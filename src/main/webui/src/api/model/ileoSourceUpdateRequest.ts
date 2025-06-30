@@ -5,7 +5,7 @@
  * OpenAPI spec version: 1.1.0-SNAPSHOT
  */
 
-export interface FreeSourceUpdateRequest {
+export interface IleoSourceUpdateRequest {
     /** @pattern \S */
     login: string;
     /** @pattern \S */
