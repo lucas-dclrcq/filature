@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v1.0.2 - 2025-06-30
+#### Miscellaneous Chores
+- **(cocogitto)** push tag with prefix - (fffe1d6) - Lucas Declercq
+
+- - -
+
 ## v1.0.1 - 2025-06-30
 #### Continuous Integration
 - prevent concurrency of github actions jobs - (3592e3f) - Lucas Declercq
