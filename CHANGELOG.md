@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v1.0.3 - 2025-06-30
+#### Miscellaneous Chores
+- bump snapshot to 1.1.0-SNAPSHOT [skip ci] - (5e318ac) - Lucas Declercq
+
+- - -
+
 ## v1.0.2 - 2025-06-30
 #### Miscellaneous Chores
 - **(cocogitto)** push tag with prefix - (fffe1d6) - Lucas Declercq
