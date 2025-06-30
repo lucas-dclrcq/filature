@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v1.0.5 - 2025-06-30
+#### Continuous Integration
+- release on all tags - (738c514) - Lucas Declercq
+#### Miscellaneous Chores
+- bump snapshot to 1.1.0-SNAPSHOT [skip ci] - (4e5ead6) - Lucas Declercq
+
+- - -
+
 ## v1.0.4 - 2025-06-30
 #### Continuous Integration
 - try to fix release workflow - (654b699) - Lucas Declercq
