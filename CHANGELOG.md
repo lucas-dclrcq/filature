@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v1.0.1 - 2025-06-30
+#### Continuous Integration
+- prevent concurrency of github actions jobs - (3592e3f) - Lucas Declercq
+#### Miscellaneous Chores
+- **(ci)** add release workflow - (d66d1e7) - Lucas Declercq
+- **(cocogitto)** add skip ci to post bump commit - (0999098) - Lucas Declercq
+- fix post bump snapshot increment - (16ffe21) - Lucas Declercq
+
+- - -
+
 ## 1.0.0 - 2025-06-30
 #### Bug Fixes
 - **(connections)** all endpoints should be transactional - (2ce5e30) - Lucas Declercq
