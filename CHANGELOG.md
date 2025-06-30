@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v1.0.7 - 2025-06-30
+#### Continuous Integration
+- another go at the release workflow - (731741c) - Lucas Declercq
+- use regex to validate tag - (a79b642) - Lucas Declercq
+#### Miscellaneous Chores
+- bump snapshot to 1.1.0-SNAPSHOT [skip ci] - (b12ed28) - Lucas Declercq
+
+- - -
+
 ## v1.0.6 - 2025-06-30
 #### Continuous Integration
 - only run release workflow on main - (09a1a49) - Lucas Declercq
