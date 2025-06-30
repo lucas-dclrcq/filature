@@ -5,6 +5,7 @@ disable_changelog = false
 disable_bump_commit = false
 generate_mono_repository_global_tag = true
 generate_mono_repository_package_tags = true
+tag_prefix = "v"
 branch_whitelist = [
     "main"
 ]
