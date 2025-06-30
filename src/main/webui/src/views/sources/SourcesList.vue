@@ -185,7 +185,7 @@ const getSourceIcon = (sourceName: string) => {
   }
 };
 
-const getSourceType = (sourceName: string) => {
+const getSourceType = (sourceName: string | undefined) => {
   switch (sourceName) {
     case 'Enercoop':
       return 'enercoop';
