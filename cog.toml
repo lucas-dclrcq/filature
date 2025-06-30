@@ -5,11 +5,21 @@ disable_changelog = false
 disable_bump_commit = false
 generate_mono_repository_global_tag = true
 generate_mono_repository_package_tags = true
-branch_whitelist = []
+branch_whitelist = [
+    "main"
+]
 skip_ci = "[skip ci]"
 skip_untracked = false
-pre_bump_hooks = []
-post_bump_hooks = []
+pre_bump_hooks = [
+    "mvn versions:set -DnewVersion={{version}}"
+]
+post_bump_hooks = [
+    "git push",
+    "git push origin {{version}}",
+    "mvn versions:set -DnewVersion={{version|1.0.0+minor-SNAPSHOT}}",
+    "cog commit chore \"bump snapshot to {{version|1.0.0+1minor-SNAPSHOT}}\"",
+    "git push",
+]
 pre_package_bump_hooks = []
 post_package_bump_hooks = []
 
